@@ -6,7 +6,8 @@ import {
   Image,
   Platform,
   StyleSheet,
-  ScrollView
+  ScrollView,
+  StatusBar
 } from 'react-native';
 import FormInput from '../components/FormInput';
 import FormButton from '../components/FormButton';
@@ -22,6 +23,12 @@ const Login = ({navigation}) => {
   const [password, setPassword] = useState();
 
   return (
+    <View style={styles.container}>
+      <StatusBar
+          barStyle="dark-content" 
+          backgroundColor={"#fff"}
+          translucent
+      />
     <ScrollView contentContainerStyle={styles.container}>
       <Image
         source={Images.Logo}
@@ -112,6 +119,7 @@ const Login = ({navigation}) => {
         <Text style={styles.navButtonText2}>SIGN UP!</Text>
       </TouchableOpacity>
     </ScrollView>
+    </View>
   );
 };
 

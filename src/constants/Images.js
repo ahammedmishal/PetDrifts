@@ -4,4 +4,6 @@ export default {
     EMAIL: require('../Assets/Images/email.png'),
     UNLOCK: require('../Assets/Images/unlock.png'),
     USER: require('../Assets/Images/user.png'),
+    CALL: require('../Assets/Images/call.png'),
+    MARKER: require('../Assets/Images/marker.png'),
 };

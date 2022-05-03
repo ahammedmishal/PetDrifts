@@ -27,7 +27,7 @@ const FormInput = ({labelValue, placeholderText, iconType,source, ...rest}) => {
                 fontFamily={Fonts.POPPINS_REGULAR}
                 numberOfLines={1}
                 placeholder={placeholderText}
-                placeholderTextColor="#666"
+                placeholderTextColor="#2D2D2D"
                 {...rest}
                 style={styles.input}
                 activeOutlineColor='#FBA304'
@@ -60,6 +60,7 @@ const styles = StyleSheet.create({
       marginBottom:8,
       flex:1,
       fontSize:15,
+      backgroundColor:'#fff',
     },
     ButtonLogo: { 
       height: 20,
