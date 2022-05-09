@@ -1,4 +1,11 @@
 import React from 'react'
-import Navigators from './src/navigators'
+import Navigators from './src/navigators/Navigators'
 
-export default () => <Navigators/>;
+const App = () => {
+    return (
+          <Navigators/>
+    );
+  };
+  
+  export default App;
+  

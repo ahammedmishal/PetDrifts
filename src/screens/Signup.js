@@ -3,17 +3,16 @@ import {
   View,
   Text,
   TouchableOpacity,
-  Image,
-  Platform,
   StyleSheet,
   ScrollView,
-  StatusBar
+  StatusBar,
+  Alert,
 } from 'react-native';
+import * as Keychain from 'react-native-keychain';
+import {AxiosContext} from '../context/AxiosContext'
+
 import FormInput from '../components/FormInput';
 import FormButton from '../components/FormButton';
-import SocialButton from '../components/SocialButton';
-import GoogleButton from '../components/GoogleButton';
-import { windowWidth } from '../utils/Dimenstions';
 import {Fonts, Images } from '../constants';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Separator from '../components/Separator';
@@ -22,11 +21,56 @@ import CheckBox from '../components/CheckBox';
 
 const Signup = ({navigation}) => {
 
-  const [email, setEmail] = useState();
-  const [user, setUser] = useState();
+  const [name, setName] = useState(null);
+  const [email, setEmail] = useState(null);
+  const [password, setPassword] = useState(null);
+  const [country, setCountry] = useState(null);
+  const authContext = useContext(AuthContext);
+  const {publicAxios} = useContext(AxiosContext);
+  const [userInfo, setUserInfo] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+
   const [phone, setPhone] = useState();
-  const [password, setPassword] = useState();
   const [music, setMusic] = useState(false);
+
+  function onClearCredentials() {
+    setEmail(null),
+    setPassword(null),
+    setCountry(null),
+    setName(null),
+    setIsLoading(false)
+  }
+
+  const onRegister = async () => {
+    try {
+        const response = await publicAxios.post('/register', {
+        name,
+        email,
+        password,
+        country,
+        });
+  
+        const {refresh, access} = response.data.user;
+        let userInfo = response.data.user;
+        setUserInfo(userInfo);
+        console.log(userInfo);
+        authContext.setAuthState({
+          access,
+          refresh,
+          authenticated: true,
+        });
+
+        await Keychain.setGenericPassword(
+          'token',
+          JSON.stringify({
+            access,
+            refresh,
+          }),
+        );
+      } catch (error) {
+        Alert.alert('Registraion Failed', JSON.stringify(error.response.data.user));
+      }
+    };
 
   return (
     <View style={styles.container}>
@@ -38,14 +82,14 @@ const Signup = ({navigation}) => {
       <View style={styles.headerContainer}>
         <Ionicons name="chevron-back-outline" size={30} onPress={() => navigation.goBack()} color={'black'} />
       </View>
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps='handled'>
       <Separator height={StatusBar.currentHeight} />
       <Text style={styles.text}>Welcome to Pet Drifts!</Text>
       <Text style={styles.text1}>Please create an account to continue</Text>
 
       <FormInput
-        labelValue={user}
-        onChangeText={(userName) => setUser(userName)}
+        labelValue={name}
+        onChangeText={(userName) => setName(userName)}
         placeholderText="Full Name"
         iconType="user"
         source={Images.USER}
@@ -64,10 +108,10 @@ const Signup = ({navigation}) => {
         autoCapitalize="none"
         autoCorrect={false}
       />
-
+  {/* //phone */}
       <FormInput
         labelValue={phone}
-        onChangeText={(userEmail) => setPhone(userEmail)}
+        onChangeText={(userPhone) => setPhone(userPhone)}
         placeholderText="Phone Number"
         iconType="email"
         source={Images.CALL}
@@ -76,8 +120,8 @@ const Signup = ({navigation}) => {
         autoCorrect={false}
       />
       <FormInput
-        labelValue={phone}
-        onChangeText={(userEmail) => setPhone(userEmail)}
+        labelValue={country}
+        onChangeText={(userCountry) => setCountry(userCountry)}
         placeholderText="Country"
         iconType="email"
         source={Images.MARKER}
@@ -90,6 +134,7 @@ const Signup = ({navigation}) => {
         labelValue={password}
         onChangeText={(userPassword) => setPassword(userPassword)}
         placeholderText="Password"
+        autoCapitalize="none"
         source={Images.UNLOCK}
         iconType="lock"
         secureTextEntry={true}
@@ -105,7 +150,7 @@ const Signup = ({navigation}) => {
 
       <FormButton
         buttonTitle="Login"
-        onPress={() => login(email, password)}
+        onPress={() => onRegister()}
       />
       
       <TouchableOpacity

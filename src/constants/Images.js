@@ -6,4 +6,6 @@ export default {
     USER: require('../Assets/Images/user.png'),
     CALL: require('../Assets/Images/call.png'),
     MARKER: require('../Assets/Images/marker.png'),
+    DOG: require('../Assets/Images/dog.png'),
+    CAT: require('../Assets/Images/cat.png'),
 };

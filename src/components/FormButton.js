@@ -3,7 +3,7 @@ import {Text,TouchableOpacity, StyleSheet } from 'react-native';
 import {windowHeight, windowWidth} from '../utils/Dimenstions';
 
 
-const FormButton = ({buttonTitle, ...rest}) => {
+const FormButton = ({buttonTitle,disabled, ...rest}) => {
   return (
     <TouchableOpacity style={styles.buttonContainer} {...rest}>
         <Text style={styles.buttonText}>{buttonTitle}</Text>

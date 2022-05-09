@@ -2,18 +2,24 @@ import React, {useContext, useState} from 'react';
 import {
   View,
   Text,
+  StyleSheet,
   TouchableOpacity,
   Image,
   Platform,
-  StyleSheet,
   ScrollView,
-  StatusBar
+  StatusBar,
+  Button,
+  Alert,
 } from 'react-native';
+import {AuthContext} from '../context/AuthContext';
+import * as Keychain from 'react-native-keychain';
+import {AxiosContext} from '../context/AxiosContext';
+
 import FormInput from '../components/FormInput';
 import FormButton from '../components/FormButton';
 import SocialButton from '../components/SocialButton';
 import GoogleButton from '../components/GoogleButton';
-import { windowWidth } from '../utils/Dimenstions';
+import { windowHeight, windowWidth } from '../utils/Dimenstions';
 import {Fonts, Images } from '../constants';
 
 
@@ -21,6 +27,39 @@ const Login = ({navigation}) => {
   const [email, setEmail] = useState();
   const [user, setUser] = useState()
   const [password, setPassword] = useState();
+  const authContext = useContext(AuthContext);
+  const {publicAxios} = useContext(AxiosContext);
+  const [userInfo, setUserInfo] = useState({});
+
+  
+  const onLogin = async () => {
+    try {
+      const response = await publicAxios.post('/login', {
+        email,
+        password,
+      });
+
+      const {refresh, access} = response.data;
+
+      let userInfo = response.data;
+      setUserInfo(userInfo);
+      authContext.setAuthState({
+        access ,
+        refresh , 
+        authenticated: true,
+      });
+
+      await Keychain.setGenericPassword(
+        'token',
+        JSON.stringify({
+          access,
+          refresh,
+        }),
+      );
+    } catch (error) {
+      Alert.alert('email or password incorrect',  JSON.stringify(error.response.data.detail));
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -29,7 +68,7 @@ const Login = ({navigation}) => {
           backgroundColor={"#fff"}
           translucent
       />
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps='handled'>
       <Image
         source={Images.Logo}
         style={styles.logo}
@@ -64,6 +103,7 @@ const Login = ({navigation}) => {
         onChangeText={(userPassword) => setPassword(userPassword)}
         placeholderText="Password"
         source={Images.UNLOCK}
+        autoCapitalize="none"
         iconType="lock"
         secureTextEntry={true}
       />
@@ -74,7 +114,7 @@ const Login = ({navigation}) => {
 
       <FormButton
         buttonTitle="Login"
-        onPress={() => login(email, password)}
+        onPress={()=> onLogin()}
       />
       
       <View style={styles.orContainerText}>
@@ -128,7 +168,7 @@ export default Login;
 const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
-    backgroundColor:'#ffffff',
+    backgroundColor:'#ffff',
     padding: 20,
     paddingTop: 50,
     flex:1
@@ -159,7 +199,7 @@ const styles = StyleSheet.create({
     alignSelf:'flex-end'
   },
   createButton: {
-    marginVertical: 20,
+    marginBottom:windowHeight / 15,
     alignSelf:'center',
     flexDirection:'row',
     justifyContent:'space-between'
@@ -200,6 +240,6 @@ const styles = StyleSheet.create({
     lineHeight: 15 * 1.4,
     color:"black",
     fontFamily:Fonts.POPPINS_REGULAR,
-    alignSelf:'center'
+    alignSelf:'center',
   },
 });
