@@ -70,7 +70,7 @@ const PetInformation = ({navigation}) => {
           translucent
       />
 
-       <Text style={styles.text}>Pet Information</Text>
+    
        <View style={{flex:1,justifyContent:'space-between'}}>
             <View>
                 <Text style={styles.text1}>Pet Name:</Text>
@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.POPPINS_SEMI_BOLD,
     fontSize: 18,
     // marginBottom: 1,
-    color: '#2D2D2D',
+    fontSize: 18,
   },
   text1: {
     fontFamily: Fonts.POPPINS_MEDIUM,

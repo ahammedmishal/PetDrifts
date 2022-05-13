@@ -7,5 +7,13 @@ export default {
     CALL: require('../Assets/Images/call.png'),
     MARKER: require('../Assets/Images/marker.png'),
     DOG: require('../Assets/Images/dog.png'),
+    BURN: require('../Assets/Images/burn.png'),
     CAT: require('../Assets/Images/cat.png'),
+    CHARGING: require('../Assets/Images/charging.png'),
+    WIFI: require('../Assets/Images/wifi.png'),
+    CLOUDDOWNLOAD: require('../Assets/Images/cloud-download.png'),
+    REFRESH: require('../Assets/Images/refresh.png'),
+    REFRESHICON: require('../Assets/Images/refreshIcon.png'),
+    PETAVATAR: require('../Assets/Images/petavatar.png'),
+    USERAVATAR: require('../Assets/Images/useravatar.png'),
 };
