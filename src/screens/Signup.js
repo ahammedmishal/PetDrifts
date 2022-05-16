@@ -10,13 +10,13 @@ import {
 } from 'react-native';
 import * as Keychain from 'react-native-keychain';
 import {AxiosContext} from '../context/AxiosContext'
-
 import FormInput from '../components/FormInput';
 import FormButton from '../components/FormButton';
 import {Fonts, Images } from '../constants';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Separator from '../components/Separator';
 import CheckBox from '../components/CheckBox';
+import { AuthContext } from '../context/AuthContext';
 
 
 const Signup = ({navigation}) => {

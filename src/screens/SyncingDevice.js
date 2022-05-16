@@ -1,19 +1,51 @@
-import React from 'react';
-import { View, Text, StyleSheet,StatusBar,Image } from 'react-native';
+import React,{useEffect,useState} from 'react';
+import { View, Text, StyleSheet,StatusBar,Image,Button,Modal} from 'react-native';
 import DeviceInfo from '../components/DeviceInfo';
 import { Fonts,Images } from '../constants';
 import { windowHeight, windowWidth} from '../utils/Dimenstions';
 import Icon from "react-native-vector-icons/Feather";
 import FormButton from '../components/FormButton';
 
-const SyncingDevice = () => {
+const SyncingDevice = ({navigation}) => {
+
+  useEffect(() => {
+    Model()
+  }, [])
+  
+  const Model = () =>{
+    setTimeout(function(){
+      toggleModal()
+    },4000)
+  }
+
+  const [isModalVisible, setModalVisible] = useState(false);
+
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
+
   return (
     <View style={styles.container}>
-     <StatusBar
-        barStyle="dark-content" 
+     <StatusBar 
+        barStyle="dark-content"
         backgroundColor={"#fff"}
-        translucent
+        translucent 
      />
+     <Modal animationType="slide" transparent={true} visible={isModalVisible}>
+          <View style={{flex:1,justifyContent: "center", alignItems: "center" }}>
+            <View style={styles.modalViewContainer} >
+              <Text style={styles.modalText}>Syncing Complete</Text> 
+              <Text style={styles.modalText2}>Device Status:
+                <Text style={{color:'#FBA304'}}> Ok</Text>
+              </Text> 
+              <FormButton
+                buttonTitle={'Start Tracking'}
+                onPress={toggleModal} 
+              /> 
+            </View> 
+          </View>
+     </Modal>
+
      <View style={{flex:1,justifyContent:'space-between',alignItems:'center',paddingBottom:20}}>
         <View style={styles.titileContainer}>
             <Text style={styles.headerText1}>Syncing with Device</Text>
@@ -30,7 +62,7 @@ const SyncingDevice = () => {
 
     <FormButton
         buttonTitle="Syncing Data"
-        onPress={()=>console.log('clicked')}
+        onPress={()=>navigation.navigate('DashBoardScreen')}
         backgroundColor="#f3f3f3"
         color={'#2D2D2D'}
     />
@@ -44,7 +76,7 @@ const styles = StyleSheet.create({
     backgroundColor:'#ffffff',
     padding: 15,
     alignItems:'center',
-    justifyContent:'space-between'
+    justifyContent:'space-between',
   },
   headerText1: {
     alignSelf:'center',
@@ -79,6 +111,28 @@ const styles = StyleSheet.create({
     width: 28,
     resizeMode: 'contain',
   },
+  modalText: {
+    fontFamily: Fonts.POPPINS_MEDIUM,
+    fontSize: 19,
+    color: '#2D2D2D',
+  },
+  modalText2: {
+    fontFamily: Fonts.POPPINS_REGULAR,
+    fontSize: 14,
+    color: '#565656',
+  },
+  modalViewContainer: {
+    borderRadius:15,
+    backgroundColor:'white',
+    alignItems:'center',
+    justifyContent:'center',
+    elevation:15,
+    shadowOpacity: 0.25,
+    width:windowWidth/1.1,
+    height:windowHeight/4,
+    padding:15,
+    paddingTop:40
+  }
 });
 
 export default SyncingDevice;

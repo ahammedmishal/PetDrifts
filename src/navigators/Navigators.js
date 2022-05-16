@@ -20,6 +20,7 @@ import DeviceFound from '../screens/DeviceFound';
 import SyncingDevice from '../screens/SyncingDevice';
 import DashBoardScreen from '../screens/DashBoardScreen';
 import CaloriesBurnt from '../screens/CaloriesBurnt';
+import PetAnimate from '../screens/PetAnimate';
 
 const Stack = createStackNavigator()
 
@@ -98,17 +99,63 @@ const Navigators = ()=>{
          <>
 
         <Stack.Screen options={{
-            title:'Calories Burnt',
-            headerRight: () =>{
+            title:'',
+            headerLeft: ()=>{
               return <TouchableOpacity
-              style={{paddingHorizontal: 10}}
-              onPress={() => {console.log('cliked')}}>
-               <Avatar.Image
-                source={Images.PETAVATAR}
-                size={40}
-                />
-                </TouchableOpacity>
-         }}} name="CaloriesBurnt" component={CaloriesBurnt}/>
+               style={{paddingHorizontal: 10}}
+               onPress={() => {console.log('cliked')}}>
+                <Icon name="md-close" size={30} color='#2D2D2D'/>
+               </TouchableOpacity>
+            },
+        }} name="SyncingDevice" component={SyncingDevice}/>
+        
+        <Stack.Screen options={{
+              title:'Calories Burnt',
+              headerRight: () =>{
+                return <TouchableOpacity
+                style={{paddingHorizontal: 10}}
+                onPress={() => {console.log('cliked')}}>
+                 <Avatar.Image
+                  source={Images.PETAVATAR}
+                  size={40}
+                  />
+                  </TouchableOpacity> 
+        }}} name="CaloriesBurnt" component={CaloriesBurnt}/>
+
+        <Stack.Screen options={{
+          title:'',
+          headerLeft: ()=>{
+            return <TouchableOpacity
+            style={{paddingHorizontal: 10}}
+            onPress={() => {console.log('cliked')}}>
+              <Icon name="md-close" size={30} color='#2D2D2D'/>
+            </TouchableOpacity>
+          },
+          headerRight: () =>{
+            return <TouchableOpacity
+            style={{paddingHorizontal: 10}}
+            onPress={() => {console.log('cliked')}}>
+            <Text style={styles.title}>Save</Text>
+            </TouchableOpacity>
+        }}} name="PetAnimate" component={PetAnimate}/>
+
+        <Stack.Screen options={{
+          title:'',
+          headerLeft: ()=>{
+            return <TouchableOpacity
+            style={{paddingHorizontal: 10}}
+            onPress={() => {console.log('cliked')}}>
+              <Icon name="md-close" size={30} color='#2D2D2D'/>
+            </TouchableOpacity>
+          },
+          headerRight: () =>{
+            return <TouchableOpacity
+            style={{paddingHorizontal: 10}}
+            onPress={() => {console.log('cliked')}}>
+            <Text style={styles.title}>Save</Text>
+            </TouchableOpacity>
+        }}} name="Device Found" component={DeviceFound}/>
+
 
          <Stack.Screen options={{
             title:'',
@@ -122,34 +169,6 @@ const Navigators = ()=>{
                 />
                 </TouchableOpacity>
           }}} name="DashBoardScreen" component={DashBoardScreen}/>
-
-          <Stack.Screen options={{
-            title:'',
-            headerLeft: ()=>{
-              return <TouchableOpacity
-               style={{paddingHorizontal: 10}}
-               onPress={() => {console.log('cliked')}}>
-                <Icon name="md-close" size={30} color='#2D2D2D'/>
-               </TouchableOpacity>
-            },
-          }} name="SyncingDevice" component={SyncingDevice}/>
-
-          <Stack.Screen options={{
-            title:'',
-            headerLeft: ()=>{
-              return <TouchableOpacity
-               style={{paddingHorizontal: 10}}
-               onPress={() => {console.log('cliked')}}>
-                <Icon name="md-close" size={30} color='#2D2D2D'/>
-               </TouchableOpacity>
-            },
-            headerRight: () =>{
-              return <TouchableOpacity
-              style={{paddingHorizontal: 10}}
-              onPress={() => {console.log('cliked')}}>
-               <Text style={styles.title}>Save</Text>
-               </TouchableOpacity>
-          }}} name="Device Found" component={DeviceFound}/>
 
           <Stack.Screen options={{
             title:'Device Status',

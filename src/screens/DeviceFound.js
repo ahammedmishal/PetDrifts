@@ -6,7 +6,7 @@ import { windowHeight, windowWidth} from '../utils/Dimenstions';
 import Icon from "react-native-vector-icons/Feather";
 import FormButton from '../components/FormButton';
 
-const DeviceFound = () => {
+const DeviceFound = ({navigation}) => {
   return (
     <View style={styles.container}>
      <StatusBar
@@ -33,7 +33,7 @@ const DeviceFound = () => {
 
     <FormButton
         buttonTitle="Select"
-        onPress={()=>console.log('clicked')}
+        onPress={()=>navigation.navigate('SyncingDevice')}
     />
     </View>
   );
