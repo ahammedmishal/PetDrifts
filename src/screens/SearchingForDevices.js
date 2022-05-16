@@ -8,7 +8,7 @@ import FormButton from '../components/FormButton';
 
 const AnimatedCircle = Animated.createAnimatedComponent(Circle)
 
-const PetAnimate = () => {
+const SearchingForDevices = () => {
   return (
     <View style={styles.container}>
     <StatusBar
@@ -113,4 +113,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default PetAnimate;
+export default SearchingForDevices;

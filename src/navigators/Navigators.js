@@ -20,7 +20,7 @@ import DeviceFound from '../screens/DeviceFound';
 import SyncingDevice from '../screens/SyncingDevice';
 import DashBoardScreen from '../screens/DashBoardScreen';
 import CaloriesBurnt from '../screens/CaloriesBurnt';
-import PetAnimate from '../screens/PetAnimate';
+import SearchingForDevices from '../screens/SearchingForDevices';
 
 const Stack = createStackNavigator()
 
@@ -137,7 +137,7 @@ const Navigators = ()=>{
             onPress={() => {console.log('cliked')}}>
             <Text style={styles.title}>Save</Text>
             </TouchableOpacity>
-        }}} name="PetAnimate" component={PetAnimate}/>
+        }}} name="SearchingForDevices" component={SearchingForDevices}/>
 
         <Stack.Screen options={{
           title:'',

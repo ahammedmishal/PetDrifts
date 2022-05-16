@@ -126,12 +126,18 @@ const styles = StyleSheet.create({
     backgroundColor:'white',
     alignItems:'center',
     justifyContent:'center',
-    elevation:15,
-    shadowOpacity: 0.25,
     width:windowWidth/1.1,
     height:windowHeight/4,
     padding:15,
-    paddingTop:40
+    paddingTop:40,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5
   }
 });
 
