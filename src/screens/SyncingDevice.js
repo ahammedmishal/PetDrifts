@@ -2,8 +2,9 @@ import React,{useEffect,useState} from 'react';
 import { View, Text, StyleSheet,StatusBar,Image,Button,Modal} from 'react-native';
 import DeviceInfo from '../components/DeviceInfo';
 import { Fonts,Images } from '../constants';
-import { windowHeight, windowWidth} from '../utils/Dimenstions';
+import { StatusBarHeight, windowHeight, windowWidth} from '../utils/Dimenstions';
 import Icon from "react-native-vector-icons/Feather";
+import Ionicons from 'react-native-vector-icons/Ionicons'
 import FormButton from '../components/FormButton';
 
 const SyncingDevice = ({navigation}) => {
@@ -31,6 +32,11 @@ const SyncingDevice = ({navigation}) => {
         backgroundColor={"#fff"}
         translucent 
      />
+    <View style={styles.headerContainer}>
+          <Ionicons name="close" size={30} onPress={() => navigation.navigate('DashBoardScreen')} color={'black'} />
+    </View>
+    <View style={{flex:1,justifyContent:'space-between',alignItems:'center'}}>
+
      <Modal animationType="slide" transparent={true} visible={isModalVisible}>
           <View style={{flex:1,justifyContent: "center", alignItems: "center" }}>
             <View style={styles.modalViewContainer} >
@@ -62,10 +68,12 @@ const SyncingDevice = ({navigation}) => {
 
     <FormButton
         buttonTitle="Syncing Data"
-        onPress={()=>navigation.navigate('DashBoardScreen')}
+        onPress={()=>navigation.navigate('DrawerHome')}
         backgroundColor="#f3f3f3"
         color={'#2D2D2D'}
     />
+    </View>
+
     </View>
   );
 };
@@ -75,7 +83,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor:'#ffffff',
     padding: 15,
-    alignItems:'center',
     justifyContent:'space-between',
   },
   headerText1: {
@@ -138,7 +145,13 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5
-  }
+  },
+  headerContainer: {
+    flexDirection:'row',
+    alignItems:'center',
+    justifyContent:'space-between',
+    paddingTop:StatusBarHeight
+  },
 });
 
 export default SyncingDevice;

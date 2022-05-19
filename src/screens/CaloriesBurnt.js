@@ -1,21 +1,21 @@
 import React,{useState} from 'react';
-import { View, Text, StyleSheet,TouchableOpacity,StatusBar} from 'react-native';
+import { View, Text,Image, StyleSheet,TouchableOpacity,StatusBar} from 'react-native';
 import { Fonts,Images } from '../constants';
 import Icon from 'react-native-vector-icons/Ionicons'
-import { windowHeight, windowWidth} from '../utils/Dimenstions';
+import { StatusBarHeight, windowHeight, windowWidth} from '../utils/Dimenstions';
 import { BarChart, LineChart, PieChart } from "react-native-gifted-charts";
+import {Avatar} from 'react-native-paper';
 
-
-const CaloriesBurnt = () => {
+const CaloriesBurnt = ({navigation}) => {
   
     const [lineData, setLineData] = useState([
-      {value: 0, dataPointText: '0',label:'Mon'},
-      {value: 200, dataPointText: '20',label:'Tue'},
-      {value: 180, dataPointText: '18',label:'Wed'},
-      {value: 350, dataPointText: '40',label:'Thu'},
-      {value: 200, dataPointText: '20',label:'Fri'},
-      {value: 80, dataPointText: '8',label:'Sat'},
-      {value: 280, dataPointText: '28',label:'Sun'},
+      {value: 0,label:'Mon'},
+      {value: 200,label:'Tue'},
+      {value: 180,label:'Wed'},
+      {value: 350,label:'Thu'},
+      {value: 200,label:'Fri'},
+      {value: 80,label:'Sat'},
+      {value: 280,label:'Sun'},
     ])
 
     const [barData, setBarData] = useState([
@@ -27,14 +27,29 @@ const CaloriesBurnt = () => {
       {value: 256, label: 'June'},
       {value: 300, label: 'July'},
     ])
-  
+
       return (
-        <View style={styles.container}>
-          <StatusBar
+      <View style={styles.container}>
+        <StatusBar
               barStyle="dark-content" 
-              backgroundColor={"#fff"}
+              backgroundColor="rgba(0, 0, 0, 0.20)"
               translucent
+        />
+      <View style={styles.headerContainer}>
+        <TouchableOpacity style={{padding: 15}} onPress={() => navigation.openDrawer()}>
+            <Image source={Images.MENU} style={{width:25,height:20}}/>
+        </TouchableOpacity>
+        <Text style={styles.headText} >Calories Burnt</Text>
+        <TouchableOpacity
+          style={{padding: 15}}
+          onPress={() => {console.log('cliked')}}>
+          <Avatar.Image
+            source={Images.PETAVATAR}
+            size={40}
           />
+        </TouchableOpacity>
+      </View>
+
           <View style={{paddingHorizontal:15}}>
             <View style={styles.weelkyTextContainer}>
               <Text style={styles.headerText1}>Weekly Calories</Text>
@@ -145,7 +160,7 @@ const styles = StyleSheet.create({
     flexDirection:'row',
     justifyContent:'space-between',
     alignItems:'center',
-    marginTop:windowHeight / 50,
+    marginTop:windowHeight / 10,
     marginBottom:windowHeight / 50,
     zIndex:1,
   },
@@ -162,6 +177,18 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: '#2D2D2D',
   },
+  headerContainer: {
+    flexDirection:'row',
+    alignItems:'center',
+    justifyContent:'space-between',
+    paddingTop:StatusBarHeight
+  },
+  headText:{
+    fontFamily: Fonts.POPPINS_MEDIUM,
+    fontSize: 18,
+    color: '#2D2D2D',
+    alignSelf:'center'
+  }
 });
 
 export default CaloriesBurnt;

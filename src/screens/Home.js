@@ -6,7 +6,7 @@ import {AxiosContext} from '../context/AxiosContext';
 import Spinner from '../components/Spinner';
 import * as Keychain from 'react-native-keychain';
 
-const Home = () => {
+const Home = ({navigation}) => {
 
   const [status, setStatus] = useState('idle');
 
@@ -64,6 +64,7 @@ const Home = () => {
       <View style={styles.buttonGroup}>
       {/* <Button title="Get user" onPress={onGetUserProfile} /> */}
         <Button title="Logout" onPress={() => authContext.logout()} />
+        <Button title="SyncingDevice" onPress={() => navigation.navigate('Signup')} />
       </View>
     </View>
   );

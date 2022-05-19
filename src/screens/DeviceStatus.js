@@ -1,18 +1,34 @@
 import React from 'react';
-import { View, Text, StyleSheet,StatusBar } from 'react-native';
+import { View, Text, StyleSheet,StatusBar,TouchableOpacity,Image } from 'react-native';
 import DeviceInfo from '../components/DeviceInfo';
 import { Fonts,Images } from '../constants';
-import { windowHeight, windowWidth} from '../utils/Dimenstions';
+import { StatusBarHeight, windowHeight, windowWidth} from '../utils/Dimenstions';
+import {Avatar} from 'react-native-paper';
 
-
-const DeviceStatus = () => {
+const DeviceStatus = ({navigation}) => {
   return (
     <View style={styles.container}>
      <StatusBar
         barStyle="dark-content" 
-        backgroundColor={"#fff"}
+        backgroundColor="rgba(0, 0, 0, 0.20)"
         translucent
      />
+
+    <View style={styles.headerContainer}>
+      <TouchableOpacity style={{padding: 15}} onPress={() => navigation.openDrawer()}>
+          <Image source={Images.MENU} style={{width:25,height:20}}/>
+      </TouchableOpacity>
+      <Text style={styles.headText} >Device Status</Text>
+      <TouchableOpacity
+        style={{padding: 15}}
+        onPress={() => {console.log('cliked')}}>
+        <Avatar.Image
+          source={Images.PETAVATAR}
+          size={40}
+        />
+      </TouchableOpacity>
+    </View>
+
       <View style={{flexDirection:'row'}}>
         <DeviceInfo
           title={'Battery'}
@@ -47,6 +63,18 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor:'#ffffff',
+  },
+  headerContainer: {
+    flexDirection:'row',
+    alignItems:'center',
+    justifyContent:'space-between',
+    paddingTop:StatusBarHeight
+  },
+  headText:{
+    fontFamily: Fonts.POPPINS_MEDIUM,
+    fontSize: 18,
+    color: '#2D2D2D',
+    alignSelf:'center'
   }
 });
 

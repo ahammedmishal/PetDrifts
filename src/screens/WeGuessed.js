@@ -1,8 +1,9 @@
 import React,{useState,useEffect,useContext} from 'react';
 import { View, Text, StyleSheet,StatusBar} from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons'
 import FormButton from '../components/FormButton';
 import {Fonts, Images } from '../constants';
-import { windowHeight } from '../utils/Dimenstions';
+import { StatusBarHeight, windowHeight } from '../utils/Dimenstions';
 import SwitchSelector from "react-native-switch-selector";
 import Ruler from 'react-native-animated-ruler';
 import * as Keychain from 'react-native-keychain';
@@ -76,6 +77,7 @@ const WeGuessed = ({route,navigation}) => {
             Alert.alert('Error',  JSON.stringify(error.response));
             console.log(error)
           }
+          navigation.navigate('SearchingForDevices')
     }
 
   return (
@@ -86,6 +88,10 @@ const WeGuessed = ({route,navigation}) => {
           backgroundColor={"#fff"}
           translucent
       />
+      <View style={styles.headerContainer}>
+        <Ionicons name="close" size={30} onPress={() => navigation.navigate('DashBoardScreen')} color={'black'} />
+      </View>
+
             <View style={{flex:1,justifyContent:'space-between',}}>
                 <View>
                     <Text style={styles.headerText1}>We Guessed</Text>
@@ -284,10 +290,10 @@ const WeGuessed = ({route,navigation}) => {
                 </View>
 
                 <View>
-                    <FormButton
+                  <FormButton
                         buttonTitle="Continue"
                         onPress={()=>onFormSubmit()}
-                    />
+                  />
                 </View>
             </View>
         </View>
@@ -300,9 +306,14 @@ const styles = StyleSheet.create({
     backgroundColor:'#ffffff',
     padding: 15,
   },
+  headerContainer: {
+    flexDirection:'row',
+    alignItems:'center',
+    paddingTop:StatusBarHeight
+  },
   headerText1: {
     alignSelf:'center',
-    marginTop:windowHeight/15,
+
     fontFamily: Fonts.POPPINS_MEDIUM,
     fontSize: 18,
     // marginBottom: 1,

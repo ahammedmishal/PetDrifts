@@ -3,12 +3,13 @@ import {StyleSheet,View,Text,Image,StatusBar} from 'react-native';
 import Svg, { Circle } from 'react-native-svg';
 import { Fonts,Images } from '../constants';
 import Animated, { useSharedValue, useAnimatedProps, withRepeat, withTiming, Easing } from "react-native-reanimated";
-import { windowHeight, windowWidth } from '../utils/Dimenstions';
+import { StatusBarHeight, windowHeight, windowWidth } from '../utils/Dimenstions';
 import FormButton from '../components/FormButton';
+import Ionicons from 'react-native-vector-icons/Ionicons'
 
 const AnimatedCircle = Animated.createAnimatedComponent(Circle)
 
-const SearchingForDevices = () => {
+const SearchingForDevices = ({navigation}) => {
   return (
     <View style={styles.container}>
     <StatusBar
@@ -16,7 +17,11 @@ const SearchingForDevices = () => {
         backgroundColor={"#fff"}
         translucent
     />
-    
+    <View style={styles.headerContainer}>
+        <Ionicons name="close" size={30} onPress={() => navigation.navigate('DashBoardScreen')} color={'black'} />
+        <Text style={styles.helpText} >Help</Text>
+    </View>
+
     <View>
         <View style={styles.titileContainer}>
             <Text style={styles.headerText1}>Searching For Devices</Text>
@@ -30,9 +35,10 @@ const SearchingForDevices = () => {
     </View>
 
     <FormButton
-        buttonTitle={'Syncing Data'}
+        buttonTitle={'Searching'}
         backgroundColor="#f3f3f3"
         color={'#2D2D2D'}
+        onPress={()=> navigation.navigate('DeviceFound')}
     />
     </View>
   );
@@ -76,9 +82,14 @@ function PulseCircle() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
     backgroundColor:'#ffffff',
     padding:15
+  },
+  headerContainer: {
+    flexDirection:'row',
+    alignItems:'center',
+    justifyContent:'space-between',
+    paddingTop:StatusBarHeight
   },
   outerStyle:{
     borderWidth:10
@@ -95,9 +106,6 @@ const styles = StyleSheet.create({
      resizeMode: 'contain',
      position:'absolute',
   },
-  titileContainer: {
-   
-  },
   headerText1: {
     alignSelf:'center',
     fontFamily: Fonts.POPPINS_MEDIUM,
@@ -110,6 +118,11 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color:'#565656'
   },
+  helpText:{
+    fontSize: 15,
+    fontFamily: Fonts.POPPINS_MEDIUM,
+    color:'#FBA304',
+  }
 });
 
 

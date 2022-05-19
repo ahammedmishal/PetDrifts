@@ -18,6 +18,10 @@ const AxiosProvider = ({children}) => {
     baseURL: 'http://45.63.18.150:9090/pet/',
   });
 
+  const authFitAxios = axios.create({
+    baseURL: 'http://45.63.18.150:9090/fit/',
+  });
+
   const publicAxios = axios.create({
     baseURL: 'http://45.63.18.150:9090/accounts/',
   });
@@ -36,6 +40,19 @@ const AxiosProvider = ({children}) => {
   );
 
   authPetAxios.interceptors.request.use(
+    config => {
+      if (!config.headers.Authorization) {
+        config.headers.Authorization = `Bearer ${authContext.getAccessToken()}`;
+      }
+
+      return config;
+    },
+    error => {
+      return Promise.reject(error);
+    },
+  );
+
+  authFitAxios.interceptors.request.use(
     config => {
       if (!config.headers.Authorization) {
         config.headers.Authorization = `Bearer ${authContext.getAccessToken()}`;
@@ -95,7 +112,8 @@ const AxiosProvider = ({children}) => {
       value={{
         authAxios,
         publicAxios,
-        authPetAxios
+        authPetAxios,
+        authFitAxios,
       }}>
       {children}
     </Provider>

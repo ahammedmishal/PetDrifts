@@ -4,9 +4,10 @@ import { Avatar } from 'react-native-paper';
 import FormButton from '../components/FormButton';
 import FormField from '../components/FormField';
 import { Fonts, Images } from '../constants';
+import Ionicons from 'react-native-vector-icons/Ionicons'
+import { StatusBarHeight } from '../utils/Dimenstions';
 
-
-const UserProfile = () => {
+const UserProfile = ({navigation}) => {
     const [name, setName] = useState(null);
     const [email, setEmail] = useState(null);
     const [password, setPassword] = useState(null);
@@ -14,6 +15,10 @@ const UserProfile = () => {
     const [province, setProvince] = useState(null);
   return (
     <View style={styles.container}>
+      <View style={styles.headerContainer}>
+        <Ionicons name="close" size={30} onPress={() => navigation.goBack()} color={'black'} />
+        <Text style={styles.helpText} >Save</Text>
+      </View>
 
     <View style={styles.userInfoSection}>
       <View style={{flexDirection: 'row', marginTop: 15}}>
@@ -90,6 +95,18 @@ const styles = StyleSheet.create({
   userInfoSection: {
     alignItems:'center',
   },
+  headerContainer: {
+    flexDirection:'row',
+    alignItems:'center',
+   
+    justifyContent:'space-between',
+    paddingTop:StatusBarHeight
+  },
+  helpText:{
+    fontSize: 15,
+    fontFamily: Fonts.POPPINS_MEDIUM,
+    color:'#FBA304',
+  }
 });
 
 export default UserProfile;

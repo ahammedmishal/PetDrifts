@@ -1,10 +1,11 @@
 import React,{useState,useEffect} from 'react';
-import { View, Text, StyleSheet,TextInput,TouchableOpacity,Image,Button,StatusBar,Alert} from 'react-native';
+import { View, Text, StyleSheet,SafeAreaView,TextInput,TouchableOpacity,Image,Button,StatusBar,Alert} from 'react-native';
 import FormButton from '../components/FormButton';
 import FormField from '../components/FormField';
 import {Fonts, Images } from '../constants';
-import { windowHeight } from '../utils/Dimenstions';
+import { StatusBarHeight, windowHeight } from '../utils/Dimenstions';
 import { FlatList } from 'react-native-gesture-handler';
+import Ionicons from 'react-native-vector-icons/Ionicons'
 
 const PetInformation = ({navigation}) => {
 
@@ -69,7 +70,11 @@ const PetInformation = ({navigation}) => {
           backgroundColor={"#fff"}
           translucent
       />
+     <View style={styles.headerContainer}>
+        <Ionicons name="close" size={30} onPress={() => navigation.navigate('DashBoardScreen')} color={'black'} />
+      </View>
 
+      <Text style={styles.headerText1}>Pet Information</Text>
     
        <View style={{flex:1,justifyContent:'space-between'}}>
             <View>
@@ -131,6 +136,19 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor:'#ffffff',
     padding: 15,
+  },
+  headerContainer: {
+    flexDirection:'row',
+    alignItems:'center',
+    paddingTop:StatusBarHeight
+  },
+  headerText1: {
+    alignSelf:'center',
+ 
+    fontFamily: Fonts.POPPINS_MEDIUM,
+    fontSize: 18,
+    // marginBottom: 1,
+    color: '#2D2D2D',
   },
   text: {
     alignSelf:'center',

@@ -1,25 +1,62 @@
-import React, {useState} from "react";
+import React, {useState,useEffect,useContext} from "react";
 import {
     Text,
     View,
     StyleSheet,
     StatusBar,
-    Image
+    Image,
+    TouchableOpacity
   } from "react-native";
+import {AuthContext} from '../context/AuthContext';
+import {AxiosContext} from '../context/AxiosContext';
 import { Fonts,Images } from '../constants';
-import { windowHeight, windowWidth} from '../utils/Dimenstions';
+import { StatusBarHeight, windowHeight, windowWidth} from '../utils/Dimenstions';
 import { DonutChart } from "react-native-circular-chart";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import FormButton from "../components/FormButton";
 import { LineChart, Grid } from 'react-native-svg-charts'
 import * as shape from 'd3-shape'
+import Spinner from "../components/Spinner";
+import {Avatar} from 'react-native-paper';
 
-const DashBoardScreen = () => {
-    const [data, setData] = useState([
-        {name: "Blue" ,value:350,color:'#FBA304'},
-        {name: "Red" ,value:150,color:'#5D7E76'},
-        {name: "Red" ,value:250,color:'#E3E3E3'},
-    ])
+const DashBoardScreen = ({navigation}) => { 
+
+  const axiosContext = useContext(AxiosContext);
+  const authContext = useContext(AuthContext);
+  const [caloriesRest, setCaloriesRest] = useState({});
+  const [calories, setCalories] = useState()
+  const [sleep, setSleep] = useState()
+  const [status, setStatus] = useState('loading');
+
+  useEffect(() => {
+    getCaloriesRest();
+  },[])
+  
+  const getCaloriesRest = async () => {
+    try {
+      const response = await axiosContext.authFitAxios.get('/get_dashboard')
+      let caloriesRest = response.data
+      let calories = response.data.calories
+      let sleep = response.data.sleep 
+      console.log(response.data);
+      setCaloriesRest(caloriesRest)
+      setCalories(calories)
+      setSleep(sleep)
+      console.log(caloriesRest);
+      console.log(calories);
+      console.log(sleep);
+      setStatus('success');
+    } catch (error) {
+      setStatus('error');
+      console.log(error)
+    } 
+  }
+
+const pieData = [
+  {name: "Calories" ,value: calories == 0 ? 150 : parseInt(calories) , color: calories == 0 ? '#E3E3E3' :'#FBA304'},
+  {name: "Rest" ,value: sleep == 0 ? 150 : parseInt(sleep), color: sleep == 0 ? '#E3E3E3' : '#5D7E76'},
+  {name: "Blank" ,value:350,color:'#E3E3E3'},
+]
 
 const caloriesGraph = [50, 10, 40, 95, -4, -24, 85, 91, 35, 53, -53, 24, 50, -20, -80]
 const restGraph = [200, 10, 40, 95, -4, -24, 205, 91, 35, 53, -53, 24, 250, 300, 300]
@@ -28,17 +65,36 @@ const restGraph = [200, 10, 40, 95, -4, -24, 205, 91, 35, 53, -53, 24, 250, 300,
     <View style={styles.container}>
      <StatusBar
        barStyle="dark-content" 
-       backgroundColor={"#fff"}
+       backgroundColor="rgba(0, 0, 0, 0.20)"
        translucent
      />
+    <View style={styles.headerContainer}>
+       <TouchableOpacity onPress={() => navigation.openDrawer()}>
+          <Image source={Images.MENU} style={{width:25,height:20}}/>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => {console.log('cliked')}}>
+        <Avatar.Image
+          source={Images.PETAVATAR}
+          size={40}
+        />
+      </TouchableOpacity>
+    </View>
+
      <View style={{}}>
         <View style={styles.titileContainer}>
             <Text style={styles.headerText}>Feeling like Athlete!</Text>
         </View>
-        
+
         <View style={styles.sectionWrapper}>
+ 
+          {status == 'loading' ?
+
+          <Spinner/>
+            :
+            <>
             <DonutChart
-                data={data}
+                data={pieData}
                 strokeWidth={15}
                 radius={100}
                 containerWidth={ 370 - 10 * 2}
@@ -59,6 +115,8 @@ const restGraph = [200, 10, 40, 95, -4, -24, 205, 91, 35, 53, -53, 24, 250, 300,
                 }}
             />
             <Image source={Images.BURN} style={{width:40,height:40,position:'absolute',resizeMode:'contain'}}/>
+            </>
+            }
 
             <View style={styles.sectionConatiner}>
               <View style={styles.sectionTitleConatiner}>
@@ -76,8 +134,8 @@ const restGraph = [200, 10, 40, 95, -4, -24, 205, 91, 35, 53, -53, 24, 250, 300,
         {/* Line Graph */}
         <View style={{flexDirection:'row',justifyContent:'space-between',marginTop:10}}>
           
-          <View style={styles.ChartConatinerLeft}>
-            <Text style={styles.lineGraphText}>350 Kcal</Text>
+          <TouchableOpacity activeOpacity={0.5} onPress={()=>navigation.navigate('CaloriesBurnt')} style={styles.ChartConatinerLeft}>
+            <Text style={styles.lineGraphText}>{calories} Kcal</Text>
             <LineChart
               style={{height: 95,width:100}}
               data={caloriesGraph}
@@ -86,10 +144,10 @@ const restGraph = [200, 10, 40, 95, -4, -24, 205, 91, 35, 53, -53, 24, 250, 300,
               svg={{  strokeWidth: 3, stroke: 'white' }}
             />
             <Text style={styles.lineGraphText2}>Calories</Text>
-          </View>
+          </TouchableOpacity>
 
-          <View style={styles.ChartConatinerRight}>
-            <Text style={styles.lineGraphText}>2 Hours</Text>
+          <TouchableOpacity activeOpacity={0.5} onPress={()=>navigation.navigate('CaloriesBurnt')} style={styles.ChartConatinerRight}>
+            <Text style={styles.lineGraphText}>{sleep} Hours</Text>
             <LineChart
               style={{height: 95,width:100}}
               data={restGraph}
@@ -98,7 +156,7 @@ const restGraph = [200, 10, 40, 95, -4, -24, 205, 91, 35, 53, -53, 24, 250, 300,
               svg={{  strokeWidth: 3, stroke: 'white' }}
             />
             <Text style={styles.lineGraphText2}>Rest</Text>
-          </View>
+          </TouchableOpacity>
 
         </View>
      </View>
@@ -114,7 +172,6 @@ const styles = StyleSheet.create({
       flex: 1,
       backgroundColor:'#ffffff',
       padding: 20,
-      alignItems:'center',
       justifyContent:'space-between'
     },
     titileContainer: {
@@ -178,6 +235,12 @@ const styles = StyleSheet.create({
       color:'#ffffff',
       fontFamily:Fonts.POPPINS_SEMI_BOLD,
       fontSize:17,
+    },
+    headerContainer: {
+      flexDirection:'row',
+      alignItems:'center',
+      justifyContent:'space-between',
+      paddingTop:StatusBarHeight
     },
   });
 export default DashBoardScreen;

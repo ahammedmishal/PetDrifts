@@ -1,13 +1,18 @@
-import React from 'react';
-import {Text,TouchableOpacity, StyleSheet } from 'react-native';
+import React,{useState} from 'react';
+import {Text,TouchableOpacity, StyleSheet,ActivityIndicator} from 'react-native';
 import { Fonts } from '../constants';
 import {windowHeight, windowWidth} from '../utils/Dimenstions';
 
 
-const FormButton = ({buttonTitle,disabled,backgroundColor,color, ...rest}) => {
+const FormButton = ({buttonTitle,disabled,backgroundColor,color,isLoading, ...rest}) => {
   return (
-    <TouchableOpacity style={[styles.buttonContainer,{backgroundColor: backgroundColor ? backgroundColor : '#FBA304'}]} {...rest}>
+    <TouchableOpacity disabled={isLoading} style={[styles.buttonContainer,{backgroundColor: backgroundColor ? backgroundColor : isLoading ? '#F3F3F3' : '#FBA304'}]} {...rest}>
+      {
+        isLoading ?
+         <ActivityIndicator size="small" color="#565656" />
+        :
         <Text style={[styles.buttonText,{color: color ? color : '#ffffff'}]}>{buttonTitle}</Text>
+      }
     </TouchableOpacity>
   );
 };

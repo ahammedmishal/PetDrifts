@@ -4,15 +4,17 @@ import {
   Text,
   SafeAreaView,
   ActivityIndicator,
-  View,StatusBar
+  View,StatusBar,Image,TouchableOpacity
 } from "react-native";
+import {Avatar} from 'react-native-paper';
 import List from "../components/List";
 import SearchBar from "../components/SearchBar";
-import { Fonts } from "../constants";
+import { Fonts,Images} from "../constants";
 import Icon from 'react-native-vector-icons/Ionicons'
 import FormButton from "../components/FormButton";
+import { StatusBarHeight } from "../utils/Dimenstions";
 
-const Settings = () => {
+const Settings = ({navigation}) => {
   const [searchPhrase, setSearchPhrase] = useState("");
   const [clicked, setClicked] = useState(false);
 
@@ -47,43 +49,49 @@ const Settings = () => {
     },
   ])
 
-//   const Action = ({title,icon}) =>{
-//     return(
-//         <View style={styles.action}>
-//             <View style={{flexDirection:'row',justifyContent:'space-between'}}>
-//                 <Text style={styles.heading}>Account</Text>
-//                 <Icon name="md-chevron-forward" size={20} color="black"/>
-//             </View>
-//         </View>
-//     )
-//   }
-
   return (
     <View style={styles.container}>
-           <StatusBar
+      <StatusBar
         barStyle="dark-content" 
-        backgroundColor={"#fff"}
+        backgroundColor="rgba(0, 0, 0, 0.20)"
         translucent
      />
-     <View>
+
+     <View style={styles.headerContainer}>
+        <TouchableOpacity onPress={() => navigation.openDrawer()}>
+            <Image source={Images.MENU} style={{width:25,height:20}}/>
+        </TouchableOpacity>
+        <Text style={styles.headText} >Settings</Text>
+        <TouchableOpacity
+        
+          onPress={() => {console.log('cliked')}}>
+          <Avatar.Image
+            source={Images.USERAVATAR}
+            size={40}
+          />
+        </TouchableOpacity>
+      </View>
+
+    <View style={{marginTop:20}}>
       <SearchBar
        searchPhrase={searchPhrase}
        setSearchPhrase={setSearchPhrase}
        clicked={clicked}
        setClicked={setClicked}
       />
-      <Text style={styles.title}>GENERAL SETTINGS</Text>
+    </View> 
 
+    <Text style={styles.title}>GENERAL SETTINGS</Text>
+    <View style={{justifyContent:'space-between',flex:1}}>
       <List
         searchPhrase={searchPhrase}
         data={data}
         setClicked={setClicked}
       />
-    </View> 
-
-    <FormButton
+      <FormButton
         buttonTitle="Save"
-     />
+      />
+    </View>
 
     </View>
   );
@@ -96,7 +104,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor:'#ffffff',
     padding: 20,
-    justifyContent:'space-between'
+ 
   },
   title: {
     marginTop: 20,
@@ -117,5 +125,17 @@ const styles = StyleSheet.create({
     borderBottomColor: 'lightgrey',
     borderBottomWidth: 1,
     width: "100%",
+  },
+  headerContainer: {
+    flexDirection:'row',
+    alignItems:'center',
+    justifyContent:'space-between',
+    paddingTop:StatusBarHeight
+  },
+  headText:{
+    fontFamily: Fonts.POPPINS_MEDIUM,
+    fontSize: 18,
+    color: '#2D2D2D',
+    alignSelf:'center'
   }
 });

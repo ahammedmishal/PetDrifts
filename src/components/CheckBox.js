@@ -14,9 +14,9 @@ const CheckBox = (props) => {
             <Pressable onPress={props.onPress}>
                 {
                     props.isChecked ?
-                    <MaterialCommunityIcons name="checkbox-blank-circle-outline" size={18} color="#000" />
-                    :
                     <Feather name="check-circle" size={18} color="#fba300"/>
+                    :
+                    <MaterialCommunityIcons name="checkbox-blank-circle-outline" size={18} color="#000" />
                 }
             </Pressable>
   

@@ -30,8 +30,8 @@ const Signup = ({navigation}) => {
   const [userInfo, setUserInfo] = useState({});
   const [isLoading, setIsLoading] = useState(false);
 
-  const [phone, setPhone] = useState();
-  const [music, setMusic] = useState(false);
+  const [terms, setTerms] = useState(false);
+
 
   function onClearCredentials() {
     setEmail(null),
@@ -42,6 +42,7 @@ const Signup = ({navigation}) => {
   }
 
   const onRegister = async () => {
+    setIsLoading(!isLoading);
     try {
         const response = await publicAxios.post('/register', {
         name,
@@ -49,26 +50,11 @@ const Signup = ({navigation}) => {
         password,
         country,
         });
-  
-        const {refresh, access} = response.data.user;
-        let userInfo = response.data.user;
-        setUserInfo(userInfo);
-        console.log(userInfo);
-        authContext.setAuthState({
-          access,
-          refresh,
-          authenticated: true,
-        });
-
-        await Keychain.setGenericPassword(
-          'token',
-          JSON.stringify({
-            access,
-            refresh,
-          }),
-        );
+        await navigation.navigate('Login')
+        onClearCredentials()
       } catch (error) {
         Alert.alert('Registraion Failed', JSON.stringify(error.response.data.user));
+        onClearCredentials()
       }
     };
 
@@ -109,16 +95,7 @@ const Signup = ({navigation}) => {
         autoCorrect={false}
       />
   {/* //phone */}
-      <FormInput
-        labelValue={phone}
-        onChangeText={(userPhone) => setPhone(userPhone)}
-        placeholderText="Phone Number"
-        iconType="email"
-        source={Images.CALL}
-        keyboardType="numeric"
-        autoCapitalize="none"
-        autoCorrect={false}
-      />
+
       <FormInput
         labelValue={country}
         onChangeText={(userCountry) => setCountry(userCountry)}
@@ -142,15 +119,16 @@ const Signup = ({navigation}) => {
 
       <View style={styles.termsButton} onPress={() => {}}>
         <CheckBox
-            onPress={() => setMusic(!music)}
+            onPress={() => setTerms(!terms)}
             title="By Clicking this I agree to"
-            isChecked={music}
+            isChecked={terms}
         />
       </View>
 
       <FormButton
         buttonTitle="Login"
         onPress={() => onRegister()}
+        isLoading={isLoading}
       />
       
       <TouchableOpacity

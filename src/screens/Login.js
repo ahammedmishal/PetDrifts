@@ -40,7 +40,6 @@ const Login = ({navigation}) => {
       });
 
       const {refresh, access} = response.data;
-
       let userInfo = response.data;
       setUserInfo(userInfo);
       authContext.setAuthState({
@@ -75,17 +74,6 @@ const Login = ({navigation}) => {
       />
       <Text style={styles.text}>Welcome Back!</Text>
       <Text style={styles.text1}>We have been waiting for you!</Text>
-
-      <FormInput
-        labelValue={user}
-        onChangeText={(userName) => setUser(userName)}
-        placeholderText="Username"
-        iconType="user"
-        source={Images.USER}
-        // keyboardType="name"
-        autoCapitalize="none"
-        autoCorrect={false}
-      />
 
       <FormInput
         labelValue={email}
@@ -167,9 +155,9 @@ export default Login;
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     backgroundColor:'#ffff',
-    padding: 20,
+    padding: 10,
     paddingTop: 50,
     flex:1
   },

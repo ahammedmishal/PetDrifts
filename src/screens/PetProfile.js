@@ -7,9 +7,10 @@ import { Fonts, Images } from '../constants';
 import { windowHeight } from '../utils/Dimenstions';
 import SwitchSelector from "react-native-switch-selector";
 import Ruler from 'react-native-animated-ruler';
+import Ionicons from 'react-native-vector-icons/Ionicons'
+import { StatusBarHeight } from '../utils/Dimenstions';
 
-
-const PetProfile = () => {
+const PetProfile = ({navigation}) => {
     const [name, setName] = useState(null);
     const [age, setAge] = useState(null);
     const [breed, setBreed] = useState(null);
@@ -78,6 +79,10 @@ const PetProfile = () => {
       
   return (
     <View style={styles.container}>
+      <View style={styles.headerContainer}>
+        <Ionicons name="close" size={30} onPress={() => navigation.goBack()} color={'black'} />
+        <Text style={styles.helpText} >Save</Text>
+      </View>
 
     <View style={styles.userInfoSection}>
       <View style={{flexDirection: 'row', marginTop: 15}}>
@@ -323,6 +328,17 @@ const styles = StyleSheet.create({
     alignItems:'center',
     backgroundColor:'#ffffff',
   },
+  headerContainer: {
+    flexDirection:'row',
+    alignItems:'center',
+    justifyContent:'space-between',
+    paddingTop:StatusBarHeight
+  },
+  helpText:{
+    fontSize: 15,
+    fontFamily: Fonts.POPPINS_MEDIUM,
+    color:'#FBA304',
+  }
 });
 
 export default PetProfile;

@@ -44,6 +44,8 @@ const List = (props) => {
           data={props.data}
           renderItem={renderItem}
           keyExtractor={(item) => item.id}
+          showsVerticalScrollIndicator={false}
+          scrollEnabled={false}
         />
       </View>
     </SafeAreaView>
