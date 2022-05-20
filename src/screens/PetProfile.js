@@ -3,12 +3,13 @@ import { View, Text, StyleSheet,StatusBar } from 'react-native';
 import { Avatar } from 'react-native-paper';
 import FormButton from '../components/FormButton';
 import FormField from '../components/FormField';
-import { Fonts, Images } from '../constants';
+import { Colors, Fonts, Images } from '../constants';
 import { windowHeight } from '../utils/Dimenstions';
 import SwitchSelector from "react-native-switch-selector";
 import Ruler from 'react-native-animated-ruler';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { StatusBarHeight } from '../utils/Dimenstions';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const PetProfile = ({navigation}) => {
     const [name, setName] = useState(null);
@@ -58,7 +59,7 @@ const PetProfile = ({navigation}) => {
     }
 
     const onFormSubmit = async () =>{
-        try {
+      try {
             const response = await axiosContext.authPetAxios.post('/update_profile', {
               name,
               age,
@@ -70,18 +71,21 @@ const PetProfile = ({navigation}) => {
             let petInfo = response.data;
             setPetInfo(petInfo);
             console.log(petInfo);
-          } catch (error) {
+            } catch (error) {
             Alert.alert('Error',  JSON.stringify(error.response));
             console.log(error)
           }
     }
   
-      
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
-        <Ionicons name="close" size={30} onPress={() => navigation.goBack()} color={'black'} />
-        <Text style={styles.helpText} >Save</Text>
+        <TouchableOpacity>
+          <Ionicons name="close" size={30} onPress={() => navigation.goBack()} color={Colors.BLACK} />
+        </TouchableOpacity>
+        <TouchableOpacity>
+          <Text style={styles.helpText} >Save</Text>
+        </TouchableOpacity>
       </View>
 
     <View style={styles.userInfoSection}>
@@ -122,9 +126,9 @@ const PetProfile = ({navigation}) => {
         <Text style={styles.text}>Height:</Text>
         <SwitchSelector style={{width:139}}
             selectedColor={"#fff"}
-            buttonColor={'#FBA304'}
-            backgroundColor={'#f3f3f3'}
-            borderColor={'#f3f3f3'}
+            buttonColor={Colors.PRIMARY}
+            backgroundColor={Colors.LIGHT_GREY5}
+            borderColor={Colors.LIGHT_GREY5}
             hasPadding
             height={40}
             animationDuration={210}
@@ -155,10 +159,10 @@ const PetProfile = ({navigation}) => {
                 onChangeValue={value => setRulerHeight(value)}
                 step={10}
                 stepColor='#333333'
-                stepHeight={20} //big theri heieght
-                normalColor='#2D2D2D' //thari color
-                normalHeight={10} //thari height
-                backgroundColor='#FFFFFF'
+                stepHeight={20}
+                normalColor={Colors.BLACK}
+                normalHeight={10}
+                backgroundColor={Colors.DEFAULT_WHITE}
                 numberFontFamily='System'
                 numberSize={20}
                 numberColor='#888888'
@@ -188,13 +192,13 @@ const PetProfile = ({navigation}) => {
                 onChangeValue={value => setRulerHeight(value)}
                 step={10}
                 stepColor='#333333'
-                stepHeight={20} //big theri heieght
-                normalColor='#2D2D2D' //thari color
-                normalHeight={10} //thari height
-                backgroundColor='#FFFFFF'
+                stepHeight={20}
+                normalColor={Colors.BLACK}
+                normalHeight={10}
+                backgroundColor={Colors.DEFAULT_WHITE}
                 numberFontFamily='System'
                 numberSize={20}
-                numberColor='#ffff'
+                numberColor={Colors.DEFAULT_WHITE}
                 unit=''
                 unitSize={15}
                 unitBottom={20}
@@ -243,10 +247,10 @@ const PetProfile = ({navigation}) => {
                       step={10}
                       stepColor='#333333'
                       onChangeValue={value => setRulerWeight(value)}
-                      stepHeight={20} //big theri heieght
-                      normalColor='#2D2D2D' //thari color
-                      normalHeight={10} //thari height
-                      backgroundColor='#FFFFFF'
+                      stepHeight={20}
+                      normalColor={Colors.BLACK}
+                      normalHeight={10}
+                      backgroundColor={Colors.DEFAULT_WHITE}
                       numberFontFamily='System'
                       numberSize={26}
                       numberColor='#888888'
@@ -259,7 +263,6 @@ const PetProfile = ({navigation}) => {
                     </View>
                     :
                     <View style={styles.sliderOne}>
-                       {/* <Text style={styles.sliderText}>({convertedCentoFeet(multiSliderValue[0])}) ft</Text> */}
                        <Ruler
                          style={{borderBottomWidth:2}}
                          width={350}
@@ -276,9 +279,9 @@ const PetProfile = ({navigation}) => {
                          step={10}
                          stepColor='#333333'
                          onChangeValue={value => setRulerWeight(value)}
-                         stepHeight={20} //big theri heieght
-                         normalColor='#2D2D2D' //thari color
-                         normalHeight={10} //thari height
+                         stepHeight={20} 
+                         normalColor={Colors.BLACK} 
+                         normalHeight={10} 
                          backgroundColor='#FFFFFF'
                          numberFontFamily='System'
                          numberSize={26}
@@ -306,13 +309,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent:'center',
-    backgroundColor:'#ffffff',
+    backgroundColor: Colors.DEFAULT_WHITE,
     padding: 20,
   },
   text1: {
     fontFamily: Fonts.POPPINS_MEDIUM,
     fontSize: 14,
-    color: '#2D2D2D',
+    color: Colors.BLACK,
   },
   switchContainer: {
     flexDirection:'row',
@@ -322,11 +325,11 @@ const styles = StyleSheet.create({
   text: {
     fontFamily: Fonts.POPPINS_MEDIUM,
     fontSize: 13,
-    color: '#2D2D2D',
+    color: Colors.BLACK,
   },
   userInfoSection: {
     alignItems:'center',
-    backgroundColor:'#ffffff',
+    backgroundColor: Colors.DEFAULT_WHITE,
   },
   headerContainer: {
     flexDirection:'row',
@@ -337,7 +340,7 @@ const styles = StyleSheet.create({
   helpText:{
     fontSize: 15,
     fontFamily: Fonts.POPPINS_MEDIUM,
-    color:'#FBA304',
+    color: Colors.PRIMARY,
   }
 });
 

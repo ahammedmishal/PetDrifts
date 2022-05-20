@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import {StyleSheet,View,Text,Image,StatusBar} from 'react-native';
+import {StyleSheet,View,Text,Image,StatusBar,TouchableOpacity} from 'react-native';
 import Svg, { Circle } from 'react-native-svg';
-import { Fonts,Images } from '../constants';
+import { Colors, Fonts,Images } from '../constants';
 import Animated, { useSharedValue, useAnimatedProps, withRepeat, withTiming, Easing } from "react-native-reanimated";
 import { StatusBarHeight, windowHeight, windowWidth } from '../utils/Dimenstions';
 import FormButton from '../components/FormButton';
@@ -14,13 +14,13 @@ const SearchingForDevices = ({navigation}) => {
     <View style={styles.container}>
     <StatusBar
         barStyle="dark-content" 
-        backgroundColor={"#fff"}
+        backgroundColor={Colors.DEFAULT_WHITE}
         translucent
     />
-    <View style={styles.headerContainer}>
-        <Ionicons name="close" size={30} onPress={() => navigation.navigate('DashBoardScreen')} color={'black'} />
+    <TouchableOpacity style={styles.headerContainer}>
+        <Ionicons name="close" size={30} onPress={() => navigation.navigate('DrawerHome')} color={'black'} />
         <Text style={styles.helpText} >Help</Text>
-    </View>
+    </TouchableOpacity>
 
     <View>
         <View style={styles.titileContainer}>
@@ -37,7 +37,7 @@ const SearchingForDevices = ({navigation}) => {
     <FormButton
         buttonTitle={'Searching'}
         backgroundColor="#f3f3f3"
-        color={'#2D2D2D'}
+        color={Colors.BLACK}
         onPress={()=> navigation.navigate('DeviceFound')}
     />
     </View>
@@ -72,9 +72,9 @@ function PulseCircle() {
   
     return (
       <Svg width={windowWidth} height={windowHeight}>
-        <AnimatedCircle cx={200} cy={365} r={35} strokeWidth={10} stroke="#c7caef" animatedProps={innerStyle} />
-        <AnimatedCircle cx={200} cy={365} r={70} strokeWidth={6} stroke="#c7caef"animatedProps={middleStyle} />
-        <AnimatedCircle cx={200} cy={365} r={105} strokeWidth={3} stroke="#c7caef" animatedProps={outerStyle} />
+        <AnimatedCircle cx={200} cy={365} r={35} strokeWidth={10} stroke={Colors.LIGHT_VIOLET}  animatedProps={innerStyle} />
+        <AnimatedCircle cx={200} cy={365} r={70} strokeWidth={6} stroke={Colors.LIGHT_VIOLET} animatedProps={middleStyle} />
+        <AnimatedCircle cx={200} cy={365} r={105} strokeWidth={3} stroke={Colors.LIGHT_VIOLET}  animatedProps={outerStyle} />
       </Svg>
     )
   }
@@ -82,7 +82,7 @@ function PulseCircle() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor:'#ffffff',
+    backgroundColor:Colors.DEFAULT_WHITE,
     padding:15
   },
   headerContainer: {
@@ -110,18 +110,18 @@ const styles = StyleSheet.create({
     alignSelf:'center',
     fontFamily: Fonts.POPPINS_MEDIUM,
     fontSize: 18,
-    color: '#2D2D2D',
+    color: Colors.BLACK,
   },
   headerText2: {
     alignSelf:'center',
     fontFamily: Fonts.POPPINS_REGULAR,
     fontSize: 15,
-    color:'#565656'
+    color: Colors.DARK_GREY,
   },
   helpText:{
     fontSize: 15,
     fontFamily: Fonts.POPPINS_MEDIUM,
-    color:'#FBA304',
+    color: Colors.PRIMARY
   }
 });
 

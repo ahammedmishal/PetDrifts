@@ -1,12 +1,11 @@
 import React,{useState,useEffect,useContext} from 'react';
-import { View, Text, StyleSheet,StatusBar} from 'react-native';
+import { View, Text, StyleSheet,StatusBar,TouchableOpacity} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import FormButton from '../components/FormButton';
-import {Fonts, Images } from '../constants';
+import {Colors, Fonts, Images } from '../constants';
 import { StatusBarHeight, windowHeight } from '../utils/Dimenstions';
 import SwitchSelector from "react-native-switch-selector";
 import Ruler from 'react-native-animated-ruler';
-import * as Keychain from 'react-native-keychain';
 import {AuthContext} from '../context/AuthContext';
 import {AxiosContext} from '../context/AxiosContext';
 
@@ -88,9 +87,9 @@ const WeGuessed = ({route,navigation}) => {
           backgroundColor={"#fff"}
           translucent
       />
-      <View style={styles.headerContainer}>
-        <Ionicons name="close" size={30} onPress={() => navigation.navigate('DashBoardScreen')} color={'black'} />
-      </View>
+      <TouchableOpacity style={styles.headerContainer}>
+        <Ionicons name="close" size={30} onPress={() => navigation.navigate('DrawerHome')} color={'black'} />
+      </TouchableOpacity>
 
             <View style={{flex:1,justifyContent:'space-between',}}>
                 <View>
@@ -102,7 +101,7 @@ const WeGuessed = ({route,navigation}) => {
                     <Text style={styles.text1}>Height:</Text>
                     <SwitchSelector style={{width:139}}
                       selectedColor={"#fff"}
-                      buttonColor={'#FBA304'}
+                      buttonColor={Colors.PRIMARY}
                       backgroundColor={'#f3f3f3'}
                       borderColor={'#f3f3f3'}
                       hasPadding
@@ -129,17 +128,17 @@ const WeGuessed = ({route,navigation}) => {
                         maximum={222}
                         segmentWidth={2}
                         segmentSpacing={10}
-                        indicatorColor='#4552CB'
+                        indicatorColor={Colors.VIOLET}
                         indicatorWidth={100}
                         indicatorHeight={20}
                         indicatorBottom={0}
                         onChangeValue={value => setRulerHeight(value)}
                         step={10}
                         stepColor='#333333'
-                        stepHeight={20} //big theri heieght
-                        normalColor='#2D2D2D' //thari color
-                        normalHeight={10} //thari height
-                        backgroundColor='#FFFFFF'
+                        stepHeight={20} 
+                        normalColor={Colors.BLACK}
+                        normalHeight={10} 
+                        backgroundColor={Colors.DEFAULT_WHITE}
                         numberFontFamily='System'
                         numberSize={20}
                         numberColor='#888888'
@@ -162,20 +161,20 @@ const WeGuessed = ({route,navigation}) => {
                       maximum={222}
                       segmentWidth={2}
                       segmentSpacing={10}
-                      indicatorColor='#4552CB'
+                      indicatorColor={Colors.VIOLET}
                       indicatorWidth={100}
                       indicatorHeight={20}
                       indicatorBottom={0}
                       onChangeValue={value => setRulerHeight(value)}
                       step={10}
                       stepColor='#333333'
-                      stepHeight={20} //big theri heieght
-                      normalColor='#2D2D2D' //thari color
-                      normalHeight={10} //thari height
-                      backgroundColor='#FFFFFF'
+                      stepHeight={20} 
+                      normalColor={Colors.BLACK}
+                      normalHeight={10} 
+                      backgroundColor={Colors.DEFAULT_WHITE}
                       numberFontFamily='System'
                       numberSize={20}
-                      numberColor='#ffff'
+                      numberColor={Colors.DEFAULT_WHITE}
                       unit=''
                       unitSize={15}
                       unitBottom={20}
@@ -192,7 +191,7 @@ const WeGuessed = ({route,navigation}) => {
                     <Text style={styles.text1}>Weight:</Text>
                     <SwitchSelector style={{width:139}}
                       selectedColor={"#fff"}
-                      buttonColor={'#FBA304'}
+                      buttonColor={Colors.PRIMARY}
                       backgroundColor={'#f3f3f3'}
                       borderColor={'#f3f3f3'}
                       hasPadding
@@ -219,17 +218,17 @@ const WeGuessed = ({route,navigation}) => {
                       maximum={120}
                       segmentWidth={2}
                       segmentSpacing={10}
-                      indicatorColor='#4552CB'
+                      indicatorColor={Colors.VIOLET}
                       indicatorWidth={100}
                       indicatorHeight={20}
                       indicatorBottom={0}
                       step={10}
                       stepColor='#333333'
                       onChangeValue={value => setRulerWeight(value)}
-                      stepHeight={20} //big theri heieght
-                      normalColor='#2D2D2D' //thari color
-                      normalHeight={10} //thari height
-                      backgroundColor='#FFFFFF'
+                      stepHeight={20} 
+                      normalColor={Colors.BLACK}
+                      normalHeight={10} 
+                      backgroundColor={Colors.DEFAULT_WHITE}
                       numberFontFamily='System'
                       numberSize={26}
                       numberColor='#888888'
@@ -252,17 +251,17 @@ const WeGuessed = ({route,navigation}) => {
                          maximum={120}
                          segmentWidth={2}
                          segmentSpacing={10}
-                         indicatorColor='#4552CB'
+                         indicatorColor={Colors.VIOLET}
                          indicatorWidth={100}
                          indicatorHeight={20}
                          indicatorBottom={0}
                          step={10}
                          stepColor='#333333'
                          onChangeValue={value => setRulerWeight(value)}
-                         stepHeight={20} //big theri heieght
-                         normalColor='#2D2D2D' //thari color
-                         normalHeight={10} //thari height
-                         backgroundColor='#FFFFFF'
+                         stepHeight={20} 
+                         normalColor={Colors.BLACK}
+                         normalHeight={10} 
+                         backgroundColor={Colors.DEFAULT_WHITE}
                          numberFontFamily='System'
                          numberSize={26}
                          numberColor='#888888'
@@ -303,7 +302,7 @@ const WeGuessed = ({route,navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor:'#ffffff',
+    backgroundColor: Colors.DEFAULT_WHITE,
     padding: 15,
   },
   headerContainer: {
@@ -317,19 +316,19 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.POPPINS_MEDIUM,
     fontSize: 18,
     // marginBottom: 1,
-    color: '#2D2D2D',
+    color: Colors.BLACK,
   },
   headerText: {
     alignSelf:'center',
     fontFamily: Fonts.POPPINS_MEDIUM,
     fontSize: 18,
     // marginBottom: 1,
-    color: '#2D2D2D',
+    color: Colors.BLACK,
   },
   text1: {
     fontFamily: Fonts.POPPINS_MEDIUM,
     fontSize: 14,
-    color: '#2D2D2D',
+    color: Colors.BLACK,
   },
   switchContainer: {
     flexDirection:'row',
@@ -339,12 +338,12 @@ const styles = StyleSheet.create({
   noteText: {
     fontFamily: Fonts.POPPINS_MEDIUM,
     fontSize: 14,
-    color: '#FBA304',
+    color: Colors.PRIMARY,
   },
   noteText1:{
     fontFamily: Fonts.POPPINS_REGULAR,
     fontSize: 14,
-    color: '#2D2D2D',
+    color: Colors.BLACK,
   },
   sliderText: {
     fontFamily: Fonts.POPPINS_SEMI_BOLD,

@@ -1,9 +1,9 @@
 import React,{useState} from 'react';
 import { View, Text,Image, StyleSheet,TouchableOpacity,StatusBar} from 'react-native';
-import { Fonts,Images } from '../constants';
+import { Fonts,Images,Colors } from '../constants';
 import Icon from 'react-native-vector-icons/Ionicons'
 import { StatusBarHeight, windowHeight, windowWidth} from '../utils/Dimenstions';
-import { BarChart, LineChart, PieChart } from "react-native-gifted-charts";
+import { BarChart, LineChart} from "react-native-gifted-charts";
 import {Avatar} from 'react-native-paper';
 
 const CaloriesBurnt = ({navigation}) => {
@@ -31,24 +31,24 @@ const CaloriesBurnt = ({navigation}) => {
       return (
       <View style={styles.container}>
         <StatusBar
-              barStyle="dark-content" 
-              backgroundColor="rgba(0, 0, 0, 0.20)"
-              translucent
+          barStyle="dark-content" 
+          backgroundColor="rgba(0, 0, 0, 0.20)"
+          translucent
         />
-      <View style={styles.headerContainer}>
-        <TouchableOpacity style={{padding: 15}} onPress={() => navigation.openDrawer()}>
-            <Image source={Images.MENU} style={{width:25,height:20}}/>
-        </TouchableOpacity>
-        <Text style={styles.headText} >Calories Burnt</Text>
-        <TouchableOpacity
-          style={{padding: 15}}
-          onPress={() => {console.log('cliked')}}>
-          <Avatar.Image
-            source={Images.PETAVATAR}
-            size={40}
-          />
-        </TouchableOpacity>
-      </View>
+        <View style={styles.headerContainer}>
+          <TouchableOpacity style={{padding: 15}} onPress={() => navigation.openDrawer()}>
+              <Image source={Images.MENU} style={{width:25,height:20}}/>
+          </TouchableOpacity>
+          <Text style={styles.headText} >Calories Burnt</Text>
+          <TouchableOpacity
+            style={{padding: 15}}
+            onPress={()=> navigation.navigate('DrawerHome',{screen: 'PetProfile'})}>
+            <Avatar.Image
+              source={Images.PETAVATAR}
+              size={40}
+            />
+          </TouchableOpacity>
+        </View>
 
           <View style={{paddingHorizontal:15}}>
             <View style={styles.weelkyTextContainer}>
@@ -59,7 +59,7 @@ const CaloriesBurnt = ({navigation}) => {
             </View>
             <LineChart
               areaChart
-              backgroundColor={"white"}
+              backgroundColor={Colors.DEFAULT_WHITE}
               curved
               isAnimated={true}
               animationDuration={2000}
@@ -71,31 +71,37 @@ const CaloriesBurnt = ({navigation}) => {
               spacing={50}
               initialSpacing={30}
               thickness={3}
-              color1="#33BB98"
-              startFillColor1="#3D504B"
-              startFillColor2="#3D504B"
-              endFillColor1="#3D504B"
+              color1={Colors.GREEN}
+              startFillColor1= {Colors.DARK_GREEN}
+              startFillColor2= {Colors.DARK_GREEN}
+              endFillColor1= {Colors.DARK_GREEN}
               startOpacity={0.1}
               endOpacity={0}
               noOfSections={3}
               yAxisThickness={0}
               xAxisLabelTextStyle={{
                 fontSize:13,
-                color:'#565656',
+                color: Colors.DARK_GREY,
+                fontFamily:Fonts.POPPINS_REGULAR
+              }}
+              yAxisTextStyle={{
+                fontSize:15,
+                color: Colors.DARK_GREY,
+                fontFamily:Fonts.POPPINS_REGULAR
               }}
               rulesType="solid"
-              rulesColor="#EEEEEE"
+              rulesColor={Colors.LIGHT_GREY4}
               rulesThickness={2}
               xAxisColor="lightgray"
               scrollToEnd={true}
               showScrollIndicator={true}
               pointerConfig={{
                 pointerStripUptoDataPoint: true,
-                pointerStripColor: '#33BB98',
+                pointerStripColor: Colors.GREEN,
                 pointerStripWidth:5,
                 pointerStripHeight: 40,
                 strokeDashArray: [11, 11],
-                pointerColor: '#679D8F',
+                pointerColor: Colors.LIGHT_GREEN,
                 showPointerStrip:true,
                 radius: 4,
                 shiftPointerLabelX:-35,
@@ -109,14 +115,14 @@ const CaloriesBurnt = ({navigation}) => {
                       style={{
                         height: 50,
                         width: 85,
-                        backgroundColor: '#679D8F',
+                        backgroundColor: Colors.LIGHT_GREEN,
                         borderRadius: 4,
                         justifyContent:'center',
                         alignItems:'center',
                         borderRadius:8,
                       }}>
-                      <Text style={{color: 'white', fontWeight:'bold',fontSize:16}}>{items[0].value}</Text>
-                      <Text style={{color: 'white',fontSize:12,fontFamily:Fonts.POPPINS_REGULAR}}>{"Kcal"}</Text>
+                      <Text style={{color: Colors.DEFAULT_WHITE, fontWeight:'bold',fontSize:16}}>{items[0].value}</Text>
+                      <Text style={{color: Colors.DEFAULT_WHITE, fontSize:12,fontFamily:Fonts.POPPINS_REGULAR}}>{"Kcal"}</Text>
                     </View>
                   );
                 },
@@ -132,7 +138,7 @@ const CaloriesBurnt = ({navigation}) => {
           </View>
       
           <BarChart
-            barWidth={29}
+            barWidth={30}
             isAnimated={true}
             noOfSections={3}
             windowWidth={windowWidth}
@@ -144,8 +150,19 @@ const CaloriesBurnt = ({navigation}) => {
             frontColor={'#e1f1ed'}
             hideRules
             hideYAxisText={true}
-            initialSpacing={0}
+            initialSpacing={6}
             disableScroll={true}
+            xAxisLabelTextStyle={{
+              fontSize:13,
+              color: Colors.DARK_GREY,
+              fontFamily:Fonts.POPPINS_REGULAR,
+              alignSelf:'center'
+            }}
+            xAxisLabelTexts={{
+              padding:10,
+              marginTop:10,
+              alignSelf:'center'
+            }}
           />
         </View>
       );
@@ -154,7 +171,7 @@ const CaloriesBurnt = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor:'#ffffff',
+    backgroundColor: Colors.DEFAULT_WHITE
   },
   weelkyTextContainer:{
     flexDirection:'row',
@@ -175,7 +192,7 @@ const styles = StyleSheet.create({
   headerText1: {
     fontFamily: Fonts.POPPINS_MEDIUM,
     fontSize: 18,
-    color: '#2D2D2D',
+    color: Colors.BLACK,
   },
   headerContainer: {
     flexDirection:'row',
@@ -186,7 +203,7 @@ const styles = StyleSheet.create({
   headText:{
     fontFamily: Fonts.POPPINS_MEDIUM,
     fontSize: 18,
-    color: '#2D2D2D',
+    color: Colors.BLACK,
     alignSelf:'center'
   }
 });

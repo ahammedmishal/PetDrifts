@@ -1,11 +1,10 @@
 import React,{useEffect,useState} from 'react';
-import { View, Text, StyleSheet,StatusBar,Image,Button,Modal} from 'react-native';
-import DeviceInfo from '../components/DeviceInfo';
-import { Fonts,Images } from '../constants';
+import { View, Text, StyleSheet,StatusBar,Image,Modal,TouchableOpacity} from 'react-native';
+import { Fonts,Images,Colors} from '../constants';
 import { StatusBarHeight, windowHeight, windowWidth} from '../utils/Dimenstions';
-import Icon from "react-native-vector-icons/Feather";
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import FormButton from '../components/FormButton';
+
 
 const SyncingDevice = ({navigation}) => {
 
@@ -29,12 +28,12 @@ const SyncingDevice = ({navigation}) => {
     <View style={styles.container}>
      <StatusBar 
         barStyle="dark-content"
-        backgroundColor={"#fff"}
+        backgroundColor={Colors.DEFAULT_WHITE}
         translucent 
      />
-    <View style={styles.headerContainer}>
-          <Ionicons name="close" size={30} onPress={() => navigation.navigate('DashBoardScreen')} color={'black'} />
-    </View>
+    <TouchableOpacity style={styles.headerContainer}>
+          <Ionicons name="close" size={30} onPress={() => navigation.navigate('DrawerHome')} color={Colors.BLACK} />
+    </TouchableOpacity>
     <View style={{flex:1,justifyContent:'space-between',alignItems:'center'}}>
 
      <Modal animationType="slide" transparent={true} visible={isModalVisible}>
@@ -42,7 +41,7 @@ const SyncingDevice = ({navigation}) => {
             <View style={styles.modalViewContainer} >
               <Text style={styles.modalText}>Syncing Complete</Text> 
               <Text style={styles.modalText2}>Device Status:
-                <Text style={{color:'#FBA304'}}> Ok</Text>
+                <Text style={{color:Colors.PRIMARY}}> Ok</Text>
               </Text> 
               <FormButton
                 buttonTitle={'Start Tracking'}
@@ -70,7 +69,7 @@ const SyncingDevice = ({navigation}) => {
         buttonTitle="Syncing Data"
         onPress={()=>navigation.navigate('DrawerHome')}
         backgroundColor="#f3f3f3"
-        color={'#2D2D2D'}
+        color={Colors.BLACK}
     />
     </View>
 
@@ -81,7 +80,7 @@ const SyncingDevice = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor:'#ffffff',
+    backgroundColor:Colors.DEFAULT_WHITE,
     padding: 15,
     justifyContent:'space-between',
   },
@@ -89,13 +88,13 @@ const styles = StyleSheet.create({
     alignSelf:'center',
     fontFamily: Fonts.POPPINS_MEDIUM,
     fontSize: 18,
-    color: '#2D2D2D',
+    color: Colors.BLACK,
   },
   headerText2: {
     alignSelf:'center',
     fontFamily: Fonts.POPPINS_REGULAR,
     fontSize: 15,
-    color:'#565656'
+    color: Colors.DARK_GREY,
   },
   logoConatiner: {
    alignItems:'center',
@@ -121,16 +120,16 @@ const styles = StyleSheet.create({
   modalText: {
     fontFamily: Fonts.POPPINS_MEDIUM,
     fontSize: 19,
-    color: '#2D2D2D',
+    color: Colors.BLACK,
   },
   modalText2: {
     fontFamily: Fonts.POPPINS_REGULAR,
     fontSize: 14,
-    color: '#565656',
+    color: Colors.DARK_GREY,
   },
   modalViewContainer: {
     borderRadius:15,
-    backgroundColor:'white',
+    backgroundColor: Colors.DEFAULT_WHITE,
     alignItems:'center',
     justifyContent:'center',
     width:windowWidth/1.1,

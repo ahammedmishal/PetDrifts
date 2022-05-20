@@ -1,3 +1,5 @@
 import Images from "./Images";
 import Fonts from "./Fonts";
-export {Images,Fonts}
+import Colors from "./Colors";
+
+export {Images,Fonts,Colors}

@@ -1,9 +1,15 @@
 import React from 'react';
-import {ActivityIndicator, StyleSheet, View} from 'react-native';
+import {ActivityIndicator, StyleSheet, View,StatusBar} from 'react-native';
+import { Colors } from '../constants';
 
 const Spinner = () => (
   <View style={styles.container}>
-    <ActivityIndicator size="large" color="#FBA304" />
+    <StatusBar
+      barStyle="dark-content" 
+      backgroundColor={"#fff"}
+      translucent
+    />
+    <ActivityIndicator size="large" color={ Colors.PRIMARY } />
   </View>
 );
 

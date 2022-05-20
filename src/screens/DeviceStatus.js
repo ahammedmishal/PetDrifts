@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet,StatusBar,TouchableOpacity,Image } from 'react-native';
 import DeviceInfo from '../components/DeviceInfo';
-import { Fonts,Images } from '../constants';
+import { Colors, Fonts,Images } from '../constants';
 import { StatusBarHeight, windowHeight, windowWidth} from '../utils/Dimenstions';
 import {Avatar} from 'react-native-paper';
 
@@ -21,7 +21,7 @@ const DeviceStatus = ({navigation}) => {
       <Text style={styles.headText} >Device Status</Text>
       <TouchableOpacity
         style={{padding: 15}}
-        onPress={() => {console.log('cliked')}}>
+        onPress={()=> navigation.navigate('DrawerHome',{screen: 'PetProfile'})}>
         <Avatar.Image
           source={Images.PETAVATAR}
           size={40}
@@ -62,7 +62,7 @@ const DeviceStatus = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor:'#ffffff',
+    backgroundColor: Colors.DEFAULT_WHITE,
   },
   headerContainer: {
     flexDirection:'row',
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
   headText:{
     fontFamily: Fonts.POPPINS_MEDIUM,
     fontSize: 18,
-    color: '#2D2D2D',
+    color: Colors.BLACK,
     alignSelf:'center'
   }
 });

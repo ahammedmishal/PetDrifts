@@ -1,6 +1,6 @@
 import React from 'react';
 import {Image, TouchableOpacity, View, StyleSheet} from 'react-native';
-import {windowHeight, windowWidth} from '../utils/Dimenstions';
+import {windowHeight} from '../utils/Dimenstions';
 
 const GoogleButton = ({
     buttonTitle,

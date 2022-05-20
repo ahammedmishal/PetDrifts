@@ -1,17 +1,17 @@
 import React,{useState} from 'react';
 import {Text,TouchableOpacity, StyleSheet,ActivityIndicator} from 'react-native';
-import { Fonts } from '../constants';
+import { Fonts,Colors } from '../constants';
 import {windowHeight, windowWidth} from '../utils/Dimenstions';
 
 
 const FormButton = ({buttonTitle,disabled,backgroundColor,color,isLoading, ...rest}) => {
   return (
-    <TouchableOpacity disabled={isLoading} style={[styles.buttonContainer,{backgroundColor: backgroundColor ? backgroundColor : isLoading ? '#F3F3F3' : '#FBA304'}]} {...rest}>
+    <TouchableOpacity disabled={isLoading} style={[styles.buttonContainer,{backgroundColor: backgroundColor ? backgroundColor : isLoading ? '#F3F3F3' : Colors.PRIMARY}]} {...rest}>
       {
         isLoading ?
-         <ActivityIndicator size="small" color="#565656" />
+         <ActivityIndicator size="small" color={Colors.DARK_GREY} />
         :
-        <Text style={[styles.buttonText,{color: color ? color : '#ffffff'}]}>{buttonTitle}</Text>
+        <Text style={[styles.buttonText,{color: color ? color : Colors.DEFAULT_WHITE}]}>{buttonTitle}</Text>
       }
     </TouchableOpacity>
   );
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
         marginBottom:20,
         width: '100%',
         height: windowHeight /15,
-        backgroundColor:'#FBA304',
+        backgroundColor: Colors.PRIMARY,
         padding: 10,
         alignItems: 'center',
         justifyContent: 'center',
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
       },
       buttonText: {
         fontSize: 16,
-        color: '#ffffff',
+        color: Colors.DEFAULT_WHITE,
         fontFamily: Fonts.POPPINS_MEDIUM,
       },
 });

@@ -3,7 +3,6 @@ import React, {useContext, useState,useEffect} from 'react';
 import {Button,Text, StyleSheet, View} from 'react-native';
 import {AuthContext} from '../context/AuthContext';
 import {AxiosContext} from '../context/AxiosContext';
-import Spinner from '../components/Spinner';
 import * as Keychain from 'react-native-keychain';
 
 const Home = ({navigation}) => {

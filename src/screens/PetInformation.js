@@ -1,8 +1,8 @@
 import React,{useState,useEffect} from 'react';
-import { View, Text, StyleSheet,SafeAreaView,TextInput,TouchableOpacity,Image,Button,StatusBar,Alert} from 'react-native';
+import { View, Text, StyleSheet,TouchableOpacity,Image,StatusBar,Alert} from 'react-native';
 import FormButton from '../components/FormButton';
 import FormField from '../components/FormField';
-import {Fonts, Images } from '../constants';
+import {Colors, Fonts, Images } from '../constants';
 import { StatusBarHeight, windowHeight } from '../utils/Dimenstions';
 import { FlatList } from 'react-native-gesture-handler';
 import Ionicons from 'react-native-vector-icons/Ionicons'
@@ -12,7 +12,6 @@ const PetInformation = ({navigation}) => {
     const [data, setData] = useState([
       { "id":1,value: 'Dog' ,image: Images.DOG },
       { "id":2,value: 'Cat', image: Images.CAT },
-      { "id":3,value: 'Wold',image: null },
     ])
     const [name, setName] = useState(null);
     const [age, setAge] = useState(null);
@@ -20,7 +19,6 @@ const PetInformation = ({navigation}) => {
     const [type, setType] = useState(null)
     
     useEffect(() => {
-      // console.log(type)
     },)
     
     const onclickItem = (item,index) =>{
@@ -44,7 +42,7 @@ const PetInformation = ({navigation}) => {
           return(
             <TouchableOpacity  onPress={()=>onclickItem(item,index)} style={styles.petContainer}>
             <View style={{flexDirection:'row',flex:1,alignItems:'center'}}>
-                <View style={[styles.iconStyle,{ borderColor: item.selected ? 'green' : 'lightgrey'}]}>
+                <View style={[styles.iconStyle,{ borderColor: item.selected ? Colors.VIOLET : 'lightgrey'}]}>
                     <Image source={item.image} style={styles.ButtonLogo}/>
                 </View>
             </View>
@@ -67,12 +65,12 @@ const PetInformation = ({navigation}) => {
     <View style={styles.container}>
        <StatusBar
           barStyle="dark-content" 
-          backgroundColor={"#fff"}
+          backgroundColor={Colors.DEFAULT_WHITE}
           translucent
       />
-     <View style={styles.headerContainer}>
-        <Ionicons name="close" size={30} onPress={() => navigation.navigate('DashBoardScreen')} color={'black'} />
-      </View>
+     <TouchableOpacity style={styles.headerContainer}>
+        <Ionicons name="close" size={30} onPress={() => navigation.navigate('DrawerHome')} color={'black'} />
+     </TouchableOpacity>
 
       <Text style={styles.headerText1}>Pet Information</Text>
     
@@ -83,7 +81,6 @@ const PetInformation = ({navigation}) => {
                     labelValue={name}
                     onChangeText={(petName) => setName(petName)}
                     iconType="user"
-                    // keyboardType="name"
                     autoCapitalize="none"
                     autoCorrect={false}
                 />
@@ -114,7 +111,6 @@ const PetInformation = ({navigation}) => {
                     labelValue={breed}
                     onChangeText={(petBreed) => setBreed(petBreed)}
                     iconType="user"
-                    // keyboardType="name"
                     autoCapitalize="none"
                     autoCorrect={false}
                 />
@@ -134,7 +130,7 @@ const PetInformation = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor:'#ffffff',
+    backgroundColor:Colors.DEFAULT_WHITE,
     padding: 15,
   },
   headerContainer: {
@@ -144,24 +140,21 @@ const styles = StyleSheet.create({
   },
   headerText1: {
     alignSelf:'center',
- 
     fontFamily: Fonts.POPPINS_MEDIUM,
     fontSize: 18,
-    // marginBottom: 1,
-    color: '#2D2D2D',
+    color: Colors.BLACK,
   },
   text: {
     alignSelf:'center',
     marginTop:windowHeight/15,
     fontFamily: Fonts.POPPINS_SEMI_BOLD,
     fontSize: 18,
-    // marginBottom: 1,
     fontSize: 18,
   },
   text1: {
     fontFamily: Fonts.POPPINS_MEDIUM,
     fontSize: 14,
-    color: '#2D2D2D',
+    color: Colors.BLACK,
   },
   petContainer: {
     height: windowHeight / 7,
@@ -175,7 +168,7 @@ const styles = StyleSheet.create({
     height: windowHeight / 8,
     borderRadius:15,
     backgroundColor:'#f3f3f3',
-    borderWidth:1
+    borderWidth:2
   },
   ButtonLogo: { 
     height: 100,

@@ -1,8 +1,7 @@
 import React from "react";
 import { StyleSheet, TextInput, View, Keyboard, Button } from "react-native";
 import Feather from "react-native-vector-icons/Feather";
-import Entypo  from "react-native-vector-icons/Entypo";
-import { Fonts } from "../constants";
+import { Colors, Fonts } from "../constants";
 
 const SearchBar = (props) => {
   return (
@@ -21,7 +20,7 @@ const SearchBar = (props) => {
               : styles.input_clicked
           }
         placeholder="Search..."
-        placeholderTextColor={'#565656'}
+        placeholderTextColor={ Colors.DARK_GREY }
         value={props.searchPhrase}
         onChangeText={props.setSearchPhrase}
         onFocus={() => {
@@ -32,12 +31,12 @@ const SearchBar = (props) => {
       <Feather
           name="search"
           size={20}
-          color="#565656"
+          color={ Colors.DARK_GREY }
       />
       )}
       
       {props.clicked && (
-        <Feather name="x" size={20} color="#565656" onPress={() => {
+        <Feather name="x" size={20} color={ Colors.DARK_GREY } onPress={() => {
             props.setSearchPhrase(""),
             Keyboard.dismiss();
             props.setClicked(false);
@@ -77,13 +76,13 @@ const styles = StyleSheet.create({
     input_unclicked: {
         fontSize: 13,
         width: "88%",
-        color:'#2D2D2D',
+        color: Colors.BLACK,
         fontFamily:Fonts.POPPINS_REGULAR
     },
     input_clicked: {
         fontSize: 13,
         width: "88%",
-        color:'#2D2D2D',
+        color: Colors.BLACK,
         fontFamily:Fonts.POPPINS_REGULAR
     },
   });

@@ -6,7 +6,7 @@ import {
   FlatList,
   SafeAreaView,
 } from "react-native";
-import { Fonts } from "../constants";
+import { Colors, Fonts } from "../constants";
 import Icon from 'react-native-vector-icons/Ionicons'
 import { windowHeight } from "../utils/Dimenstions";
 // definition of the Item, which will be rendered in the FlatList
@@ -14,7 +14,7 @@ const Item = ({ name }) => (
  <View>
     <View style={styles.item}>
         <Text style={styles.title}>{name}</Text>
-        <Icon name="md-chevron-forward" size={20} color="black"/>
+        <Icon name="md-chevron-forward" size={20} color={Colors.BLACK}/>
     </View>
    <View style={styles.line}/>
  </View>
@@ -41,11 +41,11 @@ const List = (props) => {
         }}
       >
         <FlatList
-          data={props.data}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.id}
-          showsVerticalScrollIndicator={false}
-          scrollEnabled={false}
+            data={props.data}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.id}
+            showsVerticalScrollIndicator={false}
+            scrollEnabled={false}
         />
       </View>
     </SafeAreaView>
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 16,
     fontFamily: Fonts.POPPINS_REGULAR,
-    color:'#2D2D2D',
+    color: Colors.BLACK
   },
   line : {
     borderBottomColor: 'lightgrey',

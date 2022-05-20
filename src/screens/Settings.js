@@ -2,15 +2,12 @@ import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
-  SafeAreaView,
-  ActivityIndicator,
   View,StatusBar,Image,TouchableOpacity
 } from "react-native";
 import {Avatar} from 'react-native-paper';
 import List from "../components/List";
 import SearchBar from "../components/SearchBar";
-import { Fonts,Images} from "../constants";
-import Icon from 'react-native-vector-icons/Ionicons'
+import { Colors, Fonts,Images} from "../constants";
 import FormButton from "../components/FormButton";
 import { StatusBarHeight } from "../utils/Dimenstions";
 
@@ -63,8 +60,7 @@ const Settings = ({navigation}) => {
         </TouchableOpacity>
         <Text style={styles.headText} >Settings</Text>
         <TouchableOpacity
-        
-          onPress={() => {console.log('cliked')}}>
+            onPress={()=> navigation.navigate('DrawerHome',{screen: 'UserProfile'})}>
           <Avatar.Image
             source={Images.USERAVATAR}
             size={40}
@@ -102,7 +98,7 @@ export default Settings;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor:'#ffffff',
+    backgroundColor: Colors.DEFAULT_WHITE,
     padding: 20,
  
   },
@@ -110,7 +106,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     fontSize: 12,
     fontFamily: Fonts.POPPINS_MEDIUM,
-    color:'#2D2D2D',
+    color: Colors.BLACK,
   },
   action: {
     marginTop:25
@@ -119,7 +115,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginTop: 5,
     fontFamily: Fonts.POPPINS_REGULAR,
-    color:'#2D2D2D',
+    color: Colors.BLACK,
   },
   line : {
     borderBottomColor: 'lightgrey',

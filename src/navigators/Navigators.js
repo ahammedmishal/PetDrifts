@@ -1,34 +1,40 @@
 import React, {useCallback, useContext, useEffect, useState} from 'react';
-import { NavigationContainer, StackActions } from '@react-navigation/native'
+import {TouchableOpacity,Text,StyleSheet,Image} from 'react-native';
+import { NavigationContainer} from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
 import { AuthContext } from '../context/AuthContext' 
 import { AxiosContext } from '../context/AxiosContext';
 import * as Keychain from 'react-native-keychain';
-import Home from '../screens/Home';
-import Spinner from '../components/Spinner';
-import {Login,Signup} from '../screens';
-import {TouchableOpacity,Text,StyleSheet,Image} from 'react-native';
+
 import SplashScreen from 'react-native-splash-screen';
-import PetInformation from '../screens/PetInformation';
-import WeGuessed from '../screens/WeGuessed';
-import DeviceStatus from '../screens/DeviceStatus';
-import { Fonts ,Images } from '../constants';
+import Spinner from '../components/Spinner';
 import {Avatar} from 'react-native-paper';
-import Settings from '../screens/Settings';
-import UserProfile from '../screens/UserProfile';
+import { Fonts ,Images } from '../constants';
+
 import Icon from "react-native-vector-icons/Ionicons";
-import DeviceFound from '../screens/DeviceFound';
-import SyncingDevice from '../screens/SyncingDevice';
-import DashBoardScreen from '../screens/DashBoardScreen';
-import CaloriesBurnt from '../screens/CaloriesBurnt';
-import SearchingForDevices from '../screens/SearchingForDevices';
-import CustomDrawer from '../components/CustomDrawer';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import PetProfile from '../screens/PetProfile';
+
+import {
+  Login,
+  Signup,
+  DashBoardScreen,
+  CaloriesBurnt,
+  DeviceStatus,
+  UserProfile,
+  PetProfile,
+  Settings,
+  PetInformation,
+  WeGuessed,
+  SearchingForDevices,
+  SyncingDevice,
+  Home
+} from '../screens';
+import CustomDrawer from '../components/CustomDrawer';
+
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator()
@@ -38,7 +44,8 @@ const Navigators = ()=>{
     const authContext = useContext(AuthContext);
     const [status, setStatus] = useState('loading');
     const [userInfoStatus, setUserInfoStatus] = useState('loading')
-  
+    const [mounted, setMounted] = useState(true);
+    
     const loadJWT = useCallback(async () => {
       try {
         const value = await Keychain.getGenericPassword();
@@ -72,7 +79,7 @@ const Navigators = ()=>{
           console.log("main",error)
            setUserInfoStatus('error') 
         }  
-      }
+      } 
     }
 
     useEffect(() => {
@@ -82,7 +89,7 @@ const Navigators = ()=>{
 
     useEffect(()=>{
       checkUserInfo();
-    },[checkUserInfo()])
+    },[checkUserInfo])
 
     const DrawerHome = () => (
       <Drawer.Navigator
@@ -128,14 +135,6 @@ const Navigators = ()=>{
           ),
         }} name="DeviceStatus" component={DeviceStatus}/>
 
-        <Drawer.Screen  options={{
-          title:'Settings',
-          drawerIcon: ({color}) => (
-            <Ionicons name="settings-outline" size={22} color={color} />
-          ),
-        }}
-        name="Settings" component={Settings}/>
-
         <Stack.Screen  options={{
           title:'User Profile',
           drawerIcon: ({color}) => (
@@ -151,6 +150,14 @@ const Navigators = ()=>{
           ),
         }}
         name="PetProfile" component={PetProfile}/>
+
+        <Drawer.Screen  options={{
+          title:'Settings',
+          drawerIcon: ({color}) => (
+            <Ionicons name="settings-outline" size={22} color={color} />
+          ),
+        }}
+        name="Settings" component={Settings}/>
 
       </Drawer.Navigator>
     );
@@ -239,27 +246,18 @@ const Navigators = ()=>{
 
         <Stack.Screen options={{
           headerShown:false
+        }} name="DeviceStatus" component={DeviceStatus}/>
+
+        <Stack.Screen options={{
+          headerShown:false
         }} name="SearchingForDevices" component={SearchingForDevices}/>
 
         <Stack.Screen options={{
           headerShown: false
         }} name="DeviceFound" component={DeviceFound}/>
 
-            <Stack.Screen options={{
-              title:'Device Status',
-              headerRight: () =>{
-                return <TouchableOpacity
-                style={{paddingHorizontal: 10}}
-                onPress={() => {console.log('cliked')}}>
-                <Avatar.Image
-                  source={Images.PETAVATAR}
-                  size={40}
-                  />
-                  </TouchableOpacity>
-              }}} name="DeviceStatus" component={DeviceStatus}/>
-
-            <Stack.Screen  options={{
-              title:'User Profile',
+        <Stack.Screen  options={{
+            title:'User Profile',
               headerLeft: ()=>{
               return <TouchableOpacity
                 style={{paddingHorizontal: 10}}

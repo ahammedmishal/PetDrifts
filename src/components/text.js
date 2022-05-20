@@ -1,44 +1,30 @@
 import React from 'react';
 import {Image, View, TextInput, StyleSheet } from 'react-native';
 import {windowHeight, windowWidth} from '../utils/Dimenstions';
-
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
-import { Fonts } from '../constants';
+import { Colors, Fonts } from '../constants';
 
 const FormInput = ({labelValue, placeholderText, iconType,source, ...rest}) => {
     const [borderColor, setBorderColor] = React.useState();
-    
-    // onFocus = () =>{
-    //   setBorderColor('2D2D2D')
-    // }
-    
-    // onBlur = () =>{
-    //   setBorderColor('orange')
-    // }
-
     return (
         <View style={styles.container}>
 
-            <View style={styles.iconStyle}>
-                {/* <AntDesign name={iconType} size={23} color="#666" /> */}
-                <Image source={source} style={styles.ButtonLogo}/>
-            </View>
+          <View style={styles.iconStyle}>
+            <Image source={source} style={styles.ButtonLogo}/>
+          </View>
 
-            <View style={styles.inputContainer}>
-                <TextInput
+          <View style={styles.inputContainer}>
+              <TextInput
                 value={labelValue}
-                // style={styles.input}
                 numberOfLines={1}
                 placeholder={placeholderText}
                 placeholderTextColor="#666"
                 {...rest}
-                selectionColor="#FBA304" 
+                selectionColor={Colors.PRIMARY}
                 onBlur={console.log('focus lost')}
                 onFocus={console.log('focused')}
                 style={[styles.input,{borderColor}]}
-                />
-            </View>
+              />
+          </View>
 
         </View>
     );
@@ -47,7 +33,6 @@ const FormInput = ({labelValue, placeholderText, iconType,source, ...rest}) => {
 export default FormInput;
 
 const styles = StyleSheet.create({
-
     container: {
       flexDirection:'row',
       justifyContent:'center',

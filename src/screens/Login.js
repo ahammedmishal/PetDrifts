@@ -5,10 +5,8 @@ import {
   StyleSheet,
   TouchableOpacity,
   Image,
-  Platform,
   ScrollView,
   StatusBar,
-  Button,
   Alert,
 } from 'react-native';
 import {AuthContext} from '../context/AuthContext';
@@ -20,19 +18,22 @@ import FormButton from '../components/FormButton';
 import SocialButton from '../components/SocialButton';
 import GoogleButton from '../components/GoogleButton';
 import { windowHeight, windowWidth } from '../utils/Dimenstions';
-import {Fonts, Images } from '../constants';
+import {Fonts, Images,Colors} from '../constants';
+import { TextInput } from 'react-native-paper';
 
 
 const Login = ({navigation}) => {
+
   const [email, setEmail] = useState();
-  const [user, setUser] = useState()
   const [password, setPassword] = useState();
   const authContext = useContext(AuthContext);
   const {publicAxios} = useContext(AxiosContext);
   const [userInfo, setUserInfo] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+  const [passwordVisible, setPasswordVisible] = useState(true);
 
-  
   const onLogin = async () => {
+    setIsLoading(!isLoading);
     try {
       const response = await publicAxios.post('/login', {
         email,
@@ -55,8 +56,10 @@ const Login = ({navigation}) => {
           refresh,
         }),
       );
+      setIsLoading(false)
     } catch (error) {
       Alert.alert('email or password incorrect',  JSON.stringify(error.response.data.detail));
+      setIsLoading(false)
     }
   };
 
@@ -93,7 +96,8 @@ const Login = ({navigation}) => {
         source={Images.UNLOCK}
         autoCapitalize="none"
         iconType="lock"
-        secureTextEntry={true}
+        secureTextEntry={passwordVisible}
+        right={<TextInput.Icon color={Colors.INACTIVE_GREY} name={passwordVisible ? "eye" : "eye-off"} onPress={() => setPasswordVisible(!passwordVisible)} />}
       />
 
       <TouchableOpacity style={styles.forgotButton} onPress={() => {}}>
@@ -103,6 +107,7 @@ const Login = ({navigation}) => {
       <FormButton
         buttonTitle="Login"
         onPress={()=> onLogin()}
+        isLoading={isLoading}
       />
       
       <View style={styles.orContainerText}>
@@ -111,34 +116,29 @@ const Login = ({navigation}) => {
         <View style={styles.orTextLine}/>
       </View>
 
-      {Platform.OS === 'android' ? (
         <View style={{flexDirection:'row',justifyContent:'space-evenly'}}>
-
           <GoogleButton
             buttonTitle="Sign In with Google"
             source={Images.GOOGLE}
             color="#de4d41"
-            backgroundColor="#fdf8f8"
+            backgroundColor={Colors.GOOGLE_WHITE}
             onPress={() => googleLogin()}
-            
           />
           <SocialButton
             buttonTitle="Sign In with Facebook"
             btnType="facebook"
-            color="#fff"
-            backgroundColor="#1492e6"
+            color={Colors.DEFAULT_WHITE}
+            backgroundColor={Colors.FABEBOOK_BLUE}
             onPress={() => fbLogin()}
           />
-          
           <SocialButton
             buttonTitle="Sign In with Google"
             btnType="apple"
-            color="#fff"
-            backgroundColor="#2D2D2D"
+            color={Colors.DEFAULT_WHITE}
+            backgroundColor={Colors.BLACK}
             onPress={() => googleLogin()}
           />
         </View>
-      ) : null}
 
       <TouchableOpacity
         style={styles.createButton}
@@ -146,6 +146,7 @@ const Login = ({navigation}) => {
         <Text style={styles.navButtonText1}>Don't have an account?</Text>
         <Text style={styles.navButtonText2}>SIGN UP!</Text>
       </TouchableOpacity>
+
     </ScrollView>
     </View>
   );
@@ -156,7 +157,7 @@ export default Login;
 const styles = StyleSheet.create({
   container: {
     justifyContent: 'space-between',
-    backgroundColor:'#ffff',
+    backgroundColor:Colors.DEFAULT_WHITE,
     padding: 10,
     paddingTop: 50,
     flex:1
@@ -170,14 +171,13 @@ const styles = StyleSheet.create({
   text: {
     fontFamily: Fonts.POPPINS_SEMI_BOLD,
     fontSize: 18,
-    // marginBottom: 1,
-    color: '#feaa18',
+    color: Colors.PRIMARY,
   },
   text1: {
     fontFamily:  Fonts.POPPINS_MEDIUM,
     fontSize: 14,
     marginBottom: 8,
-    color: '#2D2D2D',
+    color: Colors.BLACK,
   },
   navButton: {
     marginTop: 15,
@@ -194,21 +194,21 @@ const styles = StyleSheet.create({
   },
   navForgottenText: {
     fontSize: 13,
-    color: '#FBA304',
+    color: Colors.PRIMARY,
     paddingRight:5,
     fontFamily: Fonts.POPPINS_SEMI_BOLD,
   },
   navButtonText1: {
     fontSize: 14,
     fontWeight: '500',
-    color: '#2D2D2D',
+    color: Colors.BLACK,
     paddingRight:5,
     fontFamily: Fonts.POPPINS_MEDIUM,
   },
   navButtonText2: {
     fontSize: 14,
     fontWeight: '700',
-    color: '#FBA304',
+    color: Colors.PRIMARY,
     fontFamily: Fonts.POPPINS_BOLD,
   },
   orContainerText:{
@@ -221,7 +221,7 @@ const styles = StyleSheet.create({
   orTextLine: {
     height:2,
     width:windowWidth / 2.7,
-    backgroundColor:'#ededed'
+    backgroundColor:Colors.LIGHT_GREY
   },
   orText:{
     fontSize: 15,

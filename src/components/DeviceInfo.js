@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet,Image} from 'react-native';
-import { Fonts,Images } from '../constants';
+import { Colors, Fonts,Images } from '../constants';
 import { windowHeight, windowWidth} from '../utils/Dimenstions';
 
 const DeviceInfo = ({title,title2,source}) => {
@@ -23,7 +23,7 @@ const DeviceInfo = ({title,title2,source}) => {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor:'#ffffff',
+      backgroundColor: Colors.DEFAULT_WHITE,
       padding: 15,
     },
     ButtonLogo: { 
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     text:{
       fontFamily:Fonts.POPPINS_MEDIUM,
       fontSize:16,
-      color:'#2D2D2D'
+      color: Colors.BLACK
     },
     text1:{
       fontFamily:Fonts.POPPINS_REGULAR,
@@ -45,14 +45,14 @@ const styles = StyleSheet.create({
     dot: {
       fontFamily:Fonts.POPPINS_MEDIUM,
       fontSize:18,
-      color:'#2D2D2D',
+      color: Colors.BLACK,
       marginBottom:8
     },
     DeviceContainer: {
       width:windowWidth / 2.3,
       height:windowHeight / 7,
       borderRadius:10,
-      backgroundColor:'#f7f7f7',
+      backgroundColor: Colors.LIGHT_GREY2,
       justifyContent:'space-between',
       padding:10
     },

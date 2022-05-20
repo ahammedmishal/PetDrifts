@@ -1,7 +1,6 @@
 import React from 'react';
-import { View, Text, StyleSheet,StatusBar } from 'react-native';
-import DeviceInfo from '../components/DeviceInfo';
-import { Fonts,Images } from '../constants';
+import { View, Text, StyleSheet,StatusBar,TouchableOpacity } from 'react-native';
+import { Colors, Fonts,Images } from '../constants';
 import { StatusBarHeight, windowHeight, windowWidth} from '../utils/Dimenstions';
 import Icon from "react-native-vector-icons/Feather";
 import FormButton from '../components/FormButton';
@@ -13,12 +12,16 @@ const DeviceFound = ({navigation}) => {
     <View style={styles.container}>
       <StatusBar
           barStyle="dark-content" 
-          backgroundColor={"#fff"}
+          backgroundColor={Colors.DEFAULT_WHITE}
           translucent
       />
       <View style={styles.headerContainer}>
-          <Ionicons name="close" size={30} onPress={() => navigation.navigate('DashBoardScreen')} color={'black'} />
+        <TouchableOpacity>
+          <Ionicons name="close" size={30} onPress={() => navigation.navigate('DrawerHome')} color={Colors.BLACK} />
+        </TouchableOpacity>
+        <TouchableOpacity>
           <Text style={styles.helpText} >Help</Text>
+        </TouchableOpacity>
       </View>
 
       <View style={{flex:1,justifyContent:'space-between',alignItems:'center'}}>
@@ -34,7 +37,7 @@ const DeviceFound = ({navigation}) => {
                     <Text style={styles.title1}>Device</Text>
                 </View>
                 <View>
-                    <Icon name='check-circle' size={25} color="#FBA304"/>
+                    <Icon name='check-circle' size={25} color={Colors.PRIMARY}/>
                 </View>
             </View>
         </View>
@@ -50,7 +53,7 @@ const DeviceFound = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor:'#ffffff',
+    backgroundColor: Colors.DEFAULT_WHITE,
     padding: 15,
     
   },
@@ -61,31 +64,31 @@ const styles = StyleSheet.create({
     alignSelf:'center',
     fontFamily: Fonts.POPPINS_MEDIUM,
     fontSize: 18,
-    color: '#2D2D2D',
+    color: Colors.BLACK,
   },
   headerText2: {
     alignSelf:'center',
     fontFamily: Fonts.POPPINS_REGULAR,
     fontSize: 15,
-    color:'#565656'
+    color: Colors.DARK_GREY
   },
   title: {
     alignSelf:'center',
     fontFamily: Fonts.POPPINS_MEDIUM,
     fontSize: 16,
-    color: '#2D2D2D',
+    color: Colors.BLACK,
   },
   title1: {
     fontFamily: Fonts.POPPINS_REGULAR,
     fontSize: 13,
-    color: '#565656',
+    color: Colors.DARK_GREY,
   },
   deviceConatiner: {
     flexDirection:'row',
     justifyContent:'space-between',
     alignItems:'center',
     borderRadius:15,
-    borderColor:'#FBA304',
+    borderColor: Colors.PRIMARY,
     borderWidth:2,
     width: windowWidth / 1.1,
     height: windowHeight / 9,
@@ -100,7 +103,7 @@ const styles = StyleSheet.create({
   helpText:{
     fontSize: 15,
     fontFamily: Fonts.POPPINS_MEDIUM,
-    color:'#FBA304',
+    color: Colors.PRIMARY,
   }
 });
 

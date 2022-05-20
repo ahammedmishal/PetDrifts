@@ -2,36 +2,33 @@ import React, {useContext, useState} from 'react';
 import {
   View,
   Text,
-  TouchableOpacity,
   StyleSheet,
-  ScrollView,
+  TouchableOpacity,
   StatusBar,
+  ScrollView,
   Alert,
 } from 'react-native';
-import * as Keychain from 'react-native-keychain';
 import {AxiosContext} from '../context/AxiosContext'
 import FormInput from '../components/FormInput';
 import FormButton from '../components/FormButton';
-import {Fonts, Images } from '../constants';
+import {Colors, Fonts, Images } from '../constants';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Separator from '../components/Separator';
 import CheckBox from '../components/CheckBox';
 import { AuthContext } from '../context/AuthContext';
-
+import { TextInput } from 'react-native-paper';
 
 const Signup = ({navigation}) => {
 
+  const authContext = useContext(AuthContext);
+  const {publicAxios} = useContext(AxiosContext);
   const [name, setName] = useState(null);
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
   const [country, setCountry] = useState(null);
-  const authContext = useContext(AuthContext);
-  const {publicAxios} = useContext(AxiosContext);
-  const [userInfo, setUserInfo] = useState({});
   const [isLoading, setIsLoading] = useState(false);
-
   const [terms, setTerms] = useState(false);
-
+  const [passwordVisible, setPasswordVisible] = useState(true);
 
   function onClearCredentials() {
     setEmail(null),
@@ -62,7 +59,7 @@ const Signup = ({navigation}) => {
     <View style={styles.container}>
         <StatusBar
           barStyle="dark-content" 
-          backgroundColor={"#fff"}
+          backgroundColor={Colors.DEFAULT_WHITE}
           translucent
         />
       <View style={styles.headerContainer}>
@@ -79,11 +76,9 @@ const Signup = ({navigation}) => {
         placeholderText="Full Name"
         iconType="user"
         source={Images.USER}
-        // keyboardType="name"
         autoCapitalize="none"
         autoCorrect={false}
       />
-
       <FormInput
         labelValue={email}
         onChangeText={(userEmail) => setEmail(userEmail)}
@@ -94,19 +89,15 @@ const Signup = ({navigation}) => {
         autoCapitalize="none"
         autoCorrect={false}
       />
-  {/* //phone */}
-
       <FormInput
         labelValue={country}
         onChangeText={(userCountry) => setCountry(userCountry)}
         placeholderText="Country"
         iconType="email"
         source={Images.MARKER}
-        // keyboardType="alphabet"
         autoCapitalize="none"
         autoCorrect={false}
       />
-
       <FormInput
         labelValue={password}
         onChangeText={(userPassword) => setPassword(userPassword)}
@@ -115,6 +106,7 @@ const Signup = ({navigation}) => {
         source={Images.UNLOCK}
         iconType="lock"
         secureTextEntry={true}
+        right={<TextInput.Icon color={Colors.INACTIVE_GREY} name={passwordVisible ? "eye" : "eye-off"} onPress={() => setPasswordVisible(!passwordVisible)} />}
       />
 
       <View style={styles.termsButton} onPress={() => {}}>
@@ -146,7 +138,7 @@ const styles = StyleSheet.create({
   container: {
     flex:1,
     justifyContent: 'center',
-    backgroundColor:'#ffffff',
+    backgroundColor:Colors.DEFAULT_WHITE,
     padding: 10,
   },
   headerContainer: {
@@ -158,14 +150,13 @@ const styles = StyleSheet.create({
   text: {
     fontFamily: Fonts.POPPINS_SEMI_BOLD,
     fontSize: 18,
-    // marginBottom: 1,
-    color: '#feaa18',
+    color: Colors.PRIMARY,
   },
   text1: {
     fontFamily:  Fonts.POPPINS_MEDIUM,
     fontSize: 14,
     marginBottom: 8,
-    color: '#2D2D2D',
+    color: Colors.BLACK,
   },
   navButton: {
     marginTop: 15,
@@ -184,27 +175,27 @@ const styles = StyleSheet.create({
   },
   navTermsText1: {
     fontSize: 13,
-    color: '#2D2D2D',
+    color: Colors.BLACK,
     paddingRight:5,
     fontFamily: Fonts.POPPINS_REGULAR,
   },
   navTermsText2: {
     fontSize: 13,
-    color: '#FBA304',
+    color: Colors.PRIMARY,
     paddingRight:5,
     fontFamily: Fonts.POPPINS_SEMI_BOLD,
   },
   navButtonText1: {
     fontSize: 14,
     fontWeight: '500',
-    color: '#2D2D2D',
+    color: Colors.BLACK,
     paddingRight:5,
     fontFamily: Fonts.POPPINS_MEDIUM,
   },
   navButtonText2: {
     fontSize: 14,
     fontWeight: '700',
-    color: '#FBA304',
+    color: Colors.PRIMARY,
     fontFamily: Fonts.POPPINS_BOLD,
   },
 });

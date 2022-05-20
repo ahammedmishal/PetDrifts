@@ -2,8 +2,6 @@ import React,{useContext} from 'react';
 import {
   View,
   Text,
-  ImageBackground,
-  Image,
   TouchableOpacity,
   StatusBar
 } from 'react-native';
@@ -12,10 +10,8 @@ import {
   DrawerItemList,
 } from '@react-navigation/drawer';
 
-
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import { Fonts } from '../constants';
+import { Colors, Fonts } from '../constants';
 import { AuthContext } from '../context/AuthContext';
 import { AxiosContext } from '../context/AxiosContext';
 
@@ -31,9 +27,9 @@ const CustomDrawer = props => {
         />
       <DrawerContentScrollView
         {...props}
-        contentContainerStyle={{backgroundColor: '#ffffff'}}>
+        contentContainerStyle={{backgroundColor: Colors.DEFAULT_WHITE}}>
 
-        <View style={{flex: 1, backgroundColor: '#fff', paddingTop: 10}}>
+        <View style={{flex: 1, backgroundColor: Colors.DEFAULT_WHITE, paddingTop: 10}}>
           <DrawerItemList {...props} />
         </View>
       </DrawerContentScrollView>
