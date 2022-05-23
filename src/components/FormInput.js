@@ -6,7 +6,7 @@ import { Colors, Fonts } from '../constants';
 import Icon from 'react-native-vector-icons/Ionicons'
 import { PasswordVisible } from './PasswordVisible';
 
-const FormInput = ({labelValue, placeholderText, iconType,source,right, ...rest}) => {
+const FormInput = ({labelValue, placeholderText, iconType,source,right,error, ...rest}) => {
 
     
     return (
@@ -29,6 +29,7 @@ const FormInput = ({labelValue, placeholderText, iconType,source,right, ...rest}
                 style={styles.input}
                 activeOutlineColor={Colors.PRIMARY}
                 right={right}
+                error={error ? error : null}
             />
           </View>
       </View>

@@ -1,13 +1,14 @@
 import React from 'react';
-import { View, Text, StyleSheet,StatusBar,TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet,StatusBar,TouchableOpacity,Button } from 'react-native';
 import { Colors, Fonts,Images } from '../constants';
 import { StatusBarHeight, windowHeight, windowWidth} from '../utils/Dimenstions';
 import Icon from "react-native-vector-icons/Feather";
 import FormButton from '../components/FormButton';
 import Ionicons from 'react-native-vector-icons/Ionicons'
-
+import {WifiWizard, HotspotWizard} from 'react-native-wifi-and-hotspot-wizard';
 
 const DeviceFound = ({navigation}) => {
+
   return (
     <View style={styles.container}>
       <StatusBar
@@ -41,6 +42,7 @@ const DeviceFound = ({navigation}) => {
                 </View>
             </View>
         </View>
+        
         <FormButton
             buttonTitle="Select"
             onPress={()=>navigation.navigate('SyncingDevice')}

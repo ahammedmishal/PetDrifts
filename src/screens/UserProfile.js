@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect,useContext} from 'react';
 import { View, Text, StyleSheet,TouchableOpacity } from 'react-native';
 import { Avatar } from 'react-native-paper';
 import FormButton from '../components/FormButton';
@@ -6,8 +6,44 @@ import FormField from '../components/FormField';
 import { Colors, Fonts, Images } from '../constants';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { StatusBarHeight } from '../utils/Dimenstions';
+import { AxiosContext } from '../context/AxiosContext';
 
 const UserProfile = ({navigation}) => {
+
+  useEffect(() => {
+    onGetProfile()
+  }, [onGetProfile])
+  
+
+  const onFormSubmit = async () =>{
+    try {
+      const response = await axiosContext.authAxios.post('/update_user_profile', {
+          name,
+          country,
+          province
+        });
+        console.log(response.data);
+        } catch (error) {
+        Alert.alert('Error',  JSON.stringify(error.response));
+        console.log(error)
+      }
+  }
+
+  const onGetProfile = async () =>{
+    try {
+      const response = await axiosContext.authAxios.get('/get_user_profile')
+      console.log(response.data);
+      setName(response.data.name)
+      // setEmail(response.data.email)
+      setCountry(response.data.country)
+      setProvince(response.data.province)
+    } catch (error) {
+      // setStatus('error');
+      console.log(error)
+    }
+  }
+    
+    const axiosContext = useContext(AxiosContext);
     const [name, setName] = useState(null);
     const [email, setEmail] = useState(null);
     const [password, setPassword] = useState(null);
@@ -19,7 +55,8 @@ const UserProfile = ({navigation}) => {
         <TouchableOpacity>
           <Ionicons name="close" size={30} onPress={() => navigation.goBack()} color={'black'} />
         </TouchableOpacity>
-        <TouchableOpacity>
+        <Text style={styles.headText} >User Profile</Text>
+        <TouchableOpacity onPress={()=> onFormSubmit()}>
           <Text style={styles.helpText} >Save</Text>
         </TouchableOpacity>
       </View>
@@ -77,7 +114,7 @@ const UserProfile = ({navigation}) => {
      />
       <FormButton
           buttonTitle="Submit"
-          onPress={()=> onLogin()}
+          onPress={()=> onFormSubmit()}
       />
     </View>
   );
@@ -108,6 +145,13 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontFamily: Fonts.POPPINS_MEDIUM,
     color: Colors.PRIMARY,
+  },
+  headText:{
+    fontFamily: Fonts.POPPINS_REGULAR,
+    fontSize: 18,
+    color: Colors.BLACK,
+    alignSelf:'center',
+    marginTop:10
   }
 });
 

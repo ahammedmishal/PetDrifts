@@ -17,18 +17,22 @@ import Separator from '../components/Separator';
 import CheckBox from '../components/CheckBox';
 import { AuthContext } from '../context/AuthContext';
 import { TextInput } from 'react-native-paper';
+import * as Animatable from 'react-native-animatable';
 
 const Signup = ({navigation}) => {
 
   const authContext = useContext(AuthContext);
   const {publicAxios} = useContext(AxiosContext);
-  const [name, setName] = useState(null);
-  const [email, setEmail] = useState(null);
-  const [password, setPassword] = useState(null);
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [country, setCountry] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [terms, setTerms] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(true);
+  const [emailValidError, setEmailValidError] = useState(null);
+  const [passwordValidError, setPasswordValidError] = useState(null);
+  const [nameValidError, setNameValidError] = useState(null);
 
   function onClearCredentials() {
     setEmail(null),
@@ -39,6 +43,9 @@ const Signup = ({navigation}) => {
   }
 
   const onRegister = async () => {
+    if(!name || !email || !country || !password ||!terms){
+      Alert.alert("please fill all the fields")
+    }else{
     setIsLoading(!isLoading);
     try {
         const response = await publicAxios.post('/register', {
@@ -53,7 +60,42 @@ const Signup = ({navigation}) => {
         Alert.alert('Registraion Failed', JSON.stringify(error.response.data.user));
         onClearCredentials()
       }
+      }
     };
+
+    const handleValidPassword = val =>{
+      if(val.length === 0){
+        setPasswordValidError(`Password can't be empty.`);
+      } else if (val.trim().length < 6){
+        setPasswordValidError('Password must be 6 characters long.');
+      }
+      else {
+       setPasswordValidError('');
+      }
+    }
+  
+    const handleValidEmail = val => {
+      let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
+      
+      if (val.length === 0) {
+        setEmailValidError(`Email address can't be empty.`);
+      } else if (reg.test(val) === false) {
+        setEmailValidError('Enter valid email address.');
+      } else if (reg.test(val) === true) {
+        setEmailValidError('');
+      }
+    };
+
+    const handleValidName = val =>{
+      if(val.length === 0){
+        setNameValidError(`Name can't be empty.`);
+      } else if (val.trim().length < 4){
+        setNameValidError(`Name must be 4 character's long`);
+      }
+      else {
+       setNameValidError('');
+      }
+    }
 
   return (
     <View style={styles.container}>
@@ -72,23 +114,36 @@ const Signup = ({navigation}) => {
 
       <FormInput
         labelValue={name}
-        onChangeText={(userName) => setName(userName)}
+        onChangeText={(userName) => {setName(userName); handleValidName(userName)}}
         placeholderText="Full Name"
         iconType="user"
         source={Images.USER}
         autoCapitalize="none"
         autoCorrect={false}
+        error={nameValidError}
       />
+      {nameValidError ?
+      <Animatable.View animation={'fadeInLeft'} duration={500}>
+        <Text style={styles.errorMsg}>{nameValidError}</Text>
+      </Animatable.View> : null
+      }
       <FormInput
         labelValue={email}
-        onChangeText={(userEmail) => setEmail(userEmail)}
+        onChangeText={userEmail => {setEmail(userEmail); handleValidEmail(userEmail)}}
         placeholderText="Email Address"
         iconType="email"
         source={Images.EMAIL}
         keyboardType="email-address"
         autoCapitalize="none"
         autoCorrect={false}
+        error={emailValidError}
       />
+      {emailValidError ?
+      <Animatable.View animation={'fadeInLeft'} duration={500}>
+        <Text style={styles.errorMsg}>{emailValidError}</Text>
+      </Animatable.View> : null
+      }
+
       <FormInput
         labelValue={country}
         onChangeText={(userCountry) => setCountry(userCountry)}
@@ -100,14 +155,21 @@ const Signup = ({navigation}) => {
       />
       <FormInput
         labelValue={password}
-        onChangeText={(userPassword) => setPassword(userPassword)}
+        onChangeText={userPassword => {setPassword(userPassword);handleValidPassword(userPassword)}}
         placeholderText="Password"
         autoCapitalize="none"
         source={Images.UNLOCK}
         iconType="lock"
-        secureTextEntry={true}
+        secureTextEntry={passwordVisible}
+        error={passwordValidError}
         right={<TextInput.Icon color={Colors.INACTIVE_GREY} name={passwordVisible ? "eye" : "eye-off"} onPress={() => setPasswordVisible(!passwordVisible)} />}
       />
+
+      {passwordValidError ?
+      <Animatable.View animation={'fadeInLeft'} duration={500}>
+        <Text style={styles.errorMsg}>{passwordValidError}</Text>
+      </Animatable.View> : null
+      }
 
       <View style={styles.termsButton} onPress={() => {}}>
         <CheckBox
@@ -198,6 +260,9 @@ const styles = StyleSheet.create({
     color: Colors.PRIMARY,
     fontFamily: Fonts.POPPINS_BOLD,
   },
+  errorMsg: {
+    color:'red',
+  }
 });
 
 export default Signup;

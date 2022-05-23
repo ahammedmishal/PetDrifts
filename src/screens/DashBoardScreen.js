@@ -18,6 +18,7 @@ import {Avatar} from 'react-native-paper';
 import { DonutChart } from "react-native-circular-chart";
 import { LineChart } from 'react-native-svg-charts'
 import * as shape from 'd3-shape'
+import { act } from "react-test-renderer";
 
 const DashBoardScreen = ({navigation}) => { 
 
@@ -27,27 +28,38 @@ const DashBoardScreen = ({navigation}) => {
   const [calories, setCalories] = useState()
   const [sleep, setSleep] = useState()
   const [status, setStatus] = useState('loading');
+  const [active, setActive] = useState(null)
 
   useEffect(() => {
     getCaloriesRest();
+    getPetStatus();
   },[])
   
   const getCaloriesRest = async () => {
     try {
       const response = await axiosContext.authFitAxios.get('/get_dashboard')
-      let caloriesRest = response.data
-      let calories = response.data.calories
-      let sleep = response.data.sleep 
+      let caloriesRest = response.data;
+      let calories = response.data.calories;
+      let sleep = response.data.sleep;
       console.log(response.data);
-      setCaloriesRest(caloriesRest)
-      setCalories(calories)
-      setSleep(sleep)
+      setCaloriesRest(caloriesRest);
+      setCalories(calories);
+      setSleep(sleep);
       console.log(caloriesRest);
       console.log(calories);
       console.log(sleep);
       setStatus('success');
     } catch (error) {
       setStatus('error');
+      console.log(error);
+    } 
+  }
+
+  const getPetStatus = async () =>{
+    try {
+      const response = await axiosContext.authFitAxios.get('/get_pet_status')
+      setActive(response.data.status)
+    } catch (error) {
       console.log(error)
     } 
   }
@@ -79,11 +91,16 @@ const restGraph = [200, 10, 40, 95, -4, -24, 205, 91, 35, 53, -53, 24, 250, 300,
             source={Images.PETAVATAR}
             size={40}
           />
+          {/* <View style={{borderRadius:30,width:12,height:12,backgroundColor:'#00F349',alignSelf:'flex-end', position: 'absolute',
+            right: -2,
+            bottom: 0,borderWidth:2,borderColor:'#ffffff'}}
+          /> */}
         </TouchableOpacity>
       </View>
 
       <View style={{}}>
           <View style={styles.titileContainer}>
+              <Text style={styles.headerText1}>{active}</Text>
               <Text style={styles.headerText}>Feeling like Athlete!</Text>
           </View>
 
@@ -186,6 +203,12 @@ const styles = StyleSheet.create({
       alignSelf:'center',
       fontFamily: Fonts.POPPINS_MEDIUM,
       fontSize: 23,
+      color: Colors.BLACK,
+    },
+    headerText1: {
+      alignSelf:'center',
+      fontFamily: Fonts.POPPINS_MEDIUM,
+      fontSize: 17,
       color: Colors.BLACK,
     },
     ChartConatinerLeft: {

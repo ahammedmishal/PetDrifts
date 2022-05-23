@@ -26,6 +26,7 @@ import {
   DeviceStatus,
   UserProfile,
   PetProfile,
+  DeviceFound,
   Settings,
   PetInformation,
   WeGuessed,
@@ -34,7 +35,6 @@ import {
   Home
 } from '../screens';
 import CustomDrawer from '../components/CustomDrawer';
-
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator()
@@ -255,24 +255,6 @@ const Navigators = ()=>{
         <Stack.Screen options={{
           headerShown: false
         }} name="DeviceFound" component={DeviceFound}/>
-
-        <Stack.Screen  options={{
-            title:'User Profile',
-              headerLeft: ()=>{
-              return <TouchableOpacity
-                style={{paddingHorizontal: 10}}
-                onPress={() => {console.log('cliked')}}>
-                <Icon name="md-close" size={30} color='#2D2D2D'/>
-                </TouchableOpacity>
-              },
-              headerRight: () =>{
-                return <TouchableOpacity
-                style={{paddingHorizontal: 10}}
-                onPress={() => {console.log('cliked')}}>
-                  <Text style={styles.title}>Save</Text>
-                  </TouchableOpacity>
-              }}}
-              name="UserProfile" component={UserProfile}/>
               
             <Stack.Screen  options={{
               title:'Settings',

@@ -11,6 +11,7 @@ import WeGuessed from "./WeGuessed";
 import SearchingForDevices from "./SearchingForDevices";
 import SyncingDevice from "./SyncingDevice";
 import Home from "./Home";
+import DeviceFound from "./DeviceFound";
 
 export {
     Login,
@@ -25,5 +26,6 @@ export {
     WeGuessed,
     SearchingForDevices,
     SyncingDevice,
+    DeviceFound,
     Home
 };

@@ -13,7 +13,7 @@ const WeGuessed = ({route,navigation}) => {
    const {name,age,breed,type} = route.params
    const [switchOne, setSwitchOne] = useState(false)
    const [switchTwo, setSwitchTwo] = useState(false)
-   const [rulerHeight, setRulerHeight] = useState()
+   const [rulerHeight, setRulerHeight] = useState('0')
    const [rulerWeight, setRulerWeight] = useState()
    const [height, setHeight] = useState(null)
    const [weight, setWeight] = useState(null)
@@ -54,13 +54,14 @@ const WeGuessed = ({route,navigation}) => {
     }
 
     const convertedLbstoKg = () => {
-      var lbs = (rulerWeight / 2.2);
+      var value = (rulerWeight / 2.2);
+      var lbs = value.toString().slice(0,4)
       console.log("second weight",lbs);
       return lbs
     }
 
     const onFormSubmit = async () =>{
-        try {
+      try {
             const response = await axiosContext.authPetAxios.post('/update_profile', {
               name,
               age,

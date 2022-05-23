@@ -71,8 +71,8 @@ const styles = StyleSheet.create({
     paddingTop:StatusBarHeight
   },
   headText:{
-    fontFamily: Fonts.POPPINS_MEDIUM,
-    fontSize: 18,
+    fontFamily: Fonts.POPPINS_REGULAR,
+    fontSize: 19,
     color: Colors.BLACK,
     alignSelf:'center'
   }

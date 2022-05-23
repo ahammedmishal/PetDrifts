@@ -1,5 +1,5 @@
 import React,{useState,useEffect,useContext} from 'react';
-import { View, Text, StyleSheet,StatusBar } from 'react-native';
+import { View, Text, StyleSheet,StatusBar,Alert,Button} from 'react-native';
 import { Avatar } from 'react-native-paper';
 import FormButton from '../components/FormButton';
 import FormField from '../components/FormField';
@@ -10,18 +10,26 @@ import Ruler from 'react-native-animated-ruler';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { StatusBarHeight } from '../utils/Dimenstions';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import {AuthContext} from '../context/AuthContext';
+import {AxiosContext} from '../context/AxiosContext';
+import ToggleSwitch from "toggle-switch-react-native";
 
 const PetProfile = ({navigation}) => {
+    const axiosContext = useContext(AxiosContext);
     const [name, setName] = useState(null);
     const [age, setAge] = useState(null);
     const [breed, setBreed] = useState(null);
     const [type, setType] = useState(null)
     const [switchOne, setSwitchOne] = useState(false)
     const [switchTwo, setSwitchTwo] = useState(false)
-    const [rulerHeight, setRulerHeight] = useState()
+    const [rulerHeight, setRulerHeight] = useState('0')
     const [rulerWeight, setRulerWeight] = useState()
     const [height, setHeight] = useState(null)
     const [weight, setWeight] = useState(null)
+    const [petInfo, setPetInfo] = useState({})
+    const [displayHeight, setdisplayHeight] = useState()
+    const [displayWeight, setdisplayWeight] = useState()
+    const [editHW, setEditHW] = useState(false)
     
     useEffect(() => {
         var h = (convertedCentoFeet())
@@ -38,11 +46,23 @@ const PetProfile = ({navigation}) => {
         console.log('original weight',weight);
         console.log(name);
         console.log(age);
-        console.log(breed);
+        console.log(breed); 
         console.log(type);
+        console.log(rulerHeight);
+        console.log(rulerWeight);
+        console.log(height);
+        console.log(weight);
       },)
 
-    const convertedCentoFeet = () => {
+    useEffect(() => {
+      onGetProfile()
+    }, [onGetProfile])
+    
+    const onToggle = (isOn) =>{
+      setEditHW(isOn)
+    }
+
+    const convertedCentoFeet = () => { 
         var realFeet = ((rulerHeight * 0.393700) / 12);
         var feet = Math.floor(realFeet);
         var inches = Math.round((realFeet - feet) * 12);
@@ -53,7 +73,8 @@ const PetProfile = ({navigation}) => {
     }
   
     const convertedLbstoKg = () => {
-        var lbs = (rulerWeight / 2.2);
+        var value = (rulerWeight / 2.2);
+        var lbs = value.toString().slice(0,4)
         console.log("second weight",lbs);
         return lbs
     }
@@ -64,7 +85,6 @@ const PetProfile = ({navigation}) => {
               name,
               age,
               breed,
-              type,
               height,
               weight
             });
@@ -77,13 +97,30 @@ const PetProfile = ({navigation}) => {
           }
     }
   
+  const onGetProfile = async () =>{
+    try {
+      const response = await axiosContext.authPetAxios.get('/get_profile')
+      console.log(response.data);
+      setName(response.data.name)
+      setAge(response.data.age)
+      setBreed(response.data.breed)
+      setdisplayHeight(response.data.height)
+      setdisplayWeight(response.data.weight)
+      console.log("he",height);
+    } catch (error) {
+      // setStatus('error');
+      console.log(error)
+    }
+  }
+  
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
         <TouchableOpacity>
           <Ionicons name="close" size={30} onPress={() => navigation.goBack()} color={Colors.BLACK} />
         </TouchableOpacity>
-        <TouchableOpacity>
+        <Text style={styles.headText} >User Profile</Text>
+        <TouchableOpacity onPress={()=>onFormSubmit()}>
           <Text style={styles.helpText} >Save</Text>
         </TouchableOpacity>
       </View>
@@ -107,7 +144,7 @@ const PetProfile = ({navigation}) => {
      />
       <Text style={styles.text}>Age:</Text>
       <FormField
-        labelValue={name}
+        labelValue={age}
         onChangeText={(PetAge) => setAge(PetAge)}
         autoCapitalize="none"
         autoCorrect={false}
@@ -115,13 +152,31 @@ const PetProfile = ({navigation}) => {
      />
       <Text style={styles.text}>Breed:</Text>
       <FormField
-        labelValue={name}
+        labelValue={breed}
         onChangeText={(PetBreed) => setBreed(PetBreed)}
         autoCapitalize="none"
         autoCorrect={false}
         placeholderText="Persian Cat"
      />
-     
+
+     {/* <TouchableOpacity style={{width:40,height:20,backgroundColor:'green',borderRadius:15,alignItems:'center',alignSelf:'flex-end'}}>
+       <Text style={{color:'#ffffff'}}>Edit</Text>
+     </TouchableOpacity> */}
+<View style={{alignSelf:'flex-end'}}>
+     <ToggleSwitch
+      label="Edit Height and Weight"
+      labelStyle={{ color: "black", fontFamily:Fonts.POPPINS_REGULAR }}
+        isOn={editHW}
+        onColor={Colors.PRIMARY}
+        offColor='#ecf0f1'
+        size="small"
+        onToggle={onToggle}
+        animationSpeed={0}
+     />
+</View>
+
+     {editHW ? 
+     <>
      <View style={styles.switchContainer}>
         <Text style={styles.text}>Height:</Text>
         <SwitchSelector style={{width:139}}
@@ -295,10 +350,18 @@ const PetProfile = ({navigation}) => {
                     </View>
                   }
      </View>
+     </>
+     :
+     <View style={{justifyContent:'space-between',flex:1}}>
+      <Text style={styles.text1}>Height : {displayHeight}</Text>
+      <Text style={styles.text1}>Weight : {displayWeight}</Text>
+     </View>
+    }
+
 
     <FormButton
         buttonTitle="Submit"
-        onPress={()=> onLogin()}
+        onPress={()=> onFormSubmit()}
     />
       
     </View>
@@ -331,6 +394,12 @@ const styles = StyleSheet.create({
     alignItems:'center',
     backgroundColor: Colors.DEFAULT_WHITE,
   },
+  sliderText: {
+    fontFamily: Fonts.POPPINS_SEMI_BOLD,
+    fontSize:15,
+    color:'#888888',
+    alignSelf:'center'
+  },
   headerContainer: {
     flexDirection:'row',
     alignItems:'center',
@@ -341,6 +410,13 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontFamily: Fonts.POPPINS_MEDIUM,
     color: Colors.PRIMARY,
+  },
+  headText:{
+    fontFamily: Fonts.POPPINS_MEDIUM,
+    fontSize: 18,
+    color: Colors.BLACK,
+    alignSelf:'center',
+    marginTop:10
   }
 });
 

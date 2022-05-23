@@ -20,20 +20,28 @@ import GoogleButton from '../components/GoogleButton';
 import { windowHeight, windowWidth } from '../utils/Dimenstions';
 import {Fonts, Images,Colors} from '../constants';
 import { TextInput } from 'react-native-paper';
+import * as Animatable from 'react-native-animatable';
 
 
 const Login = ({navigation}) => {
 
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const authContext = useContext(AuthContext);
   const {publicAxios} = useContext(AxiosContext);
   const [userInfo, setUserInfo] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(true);
+  const [emailValidError, setEmailValidError] = useState(null);
+  const [passwordValidError, setPasswordValidError] = useState(null);
 
   const onLogin = async () => {
-    setIsLoading(!isLoading);
+    if(email.length == 0 || password.length ==0){
+      Alert.alert('Wrong Input!', 'Email or Password field cannot be empty.',[
+        {text: 'Okay'}
+      ])
+    }else{
+    setIsLoading(!isLoading)
     try {
       const response = await publicAxios.post('/login', {
         email,
@@ -58,8 +66,32 @@ const Login = ({navigation}) => {
       );
       setIsLoading(false)
     } catch (error) {
-      Alert.alert('email or password incorrect',  JSON.stringify(error.response.data.detail));
+      Alert.alert('email or password incorrect.',  JSON.stringify(error.response.data.detail));
       setIsLoading(false)
+    }
+    }
+  };
+
+  const handleValidPassword = val =>{
+    if(val.length === 0){
+      setPasswordValidError(`Password can't be empty.`);
+    } else if (val.trim().length < 6){
+      setPasswordValidError('Password must be 6 characters long.');
+    }
+    else {
+     setPasswordValidError('');
+    }
+  }
+
+  const handleValidEmail = val => {
+    let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
+    
+    if (val.length === 0) {
+      setEmailValidError(`Email address can't be empty.`);
+    } else if (reg.test(val) === false) {
+      setEmailValidError('Enter valid email address.');
+    } else if (reg.test(val) === true) {
+      setEmailValidError('');
     }
   };
 
@@ -80,25 +112,38 @@ const Login = ({navigation}) => {
 
       <FormInput
         labelValue={email}
-        onChangeText={(userEmail) => setEmail(userEmail)}
+        onChangeText={userEmail => {setEmail(userEmail); handleValidEmail(userEmail)}}
         placeholderText="Email Address"
         iconType="email"
         source={Images.EMAIL}
         keyboardType="email-address"
         autoCapitalize="none"
         autoCorrect={false}
+        error={emailValidError}
       />
+      {emailValidError ?
+      <Animatable.View animation={'fadeInLeft'} duration={500}>
+        <Text style={styles.errorMsg}>{emailValidError}</Text>
+      </Animatable.View> : null
+      }
 
       <FormInput
         labelValue={password}
-        onChangeText={(userPassword) => setPassword(userPassword)}
+        onChangeText={userPassword => {setPassword(userPassword);handleValidPassword(userPassword)}}
         placeholderText="Password"
         source={Images.UNLOCK}
         autoCapitalize="none"
         iconType="lock"
         secureTextEntry={passwordVisible}
+        error={passwordValidError}
         right={<TextInput.Icon color={Colors.INACTIVE_GREY} name={passwordVisible ? "eye" : "eye-off"} onPress={() => setPasswordVisible(!passwordVisible)} />}
       />
+
+      {passwordValidError ?
+      <Animatable.View animation={'fadeInLeft'} duration={500}>
+        <Text style={styles.errorMsg}>{passwordValidError}</Text>
+      </Animatable.View> : null
+      }
 
       <TouchableOpacity style={styles.forgotButton} onPress={() => {}}>
         <Text style={styles.navForgottenText}>Forgotten Password?</Text>
@@ -230,4 +275,7 @@ const styles = StyleSheet.create({
     fontFamily:Fonts.POPPINS_REGULAR,
     alignSelf:'center',
   },
+  errorMsg: {
+    color:'red',
+  }
 });
