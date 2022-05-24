@@ -116,8 +116,8 @@ const PetProfile = ({navigation}) => {
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
-        <TouchableOpacity>
-          <Ionicons name="close" size={30} onPress={() => navigation.goBack()} color={Colors.BLACK} />
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Ionicons name="close" size={30} color={Colors.BLACK} />
         </TouchableOpacity>
         <Text style={styles.headText} >User Profile</Text>
         <TouchableOpacity onPress={()=>onFormSubmit()}>
@@ -352,7 +352,7 @@ const PetProfile = ({navigation}) => {
      </View>
      </>
      :
-     <View style={{justifyContent:'space-between',flex:1}}>
+     <View style={{justifyContent:'space-between',flex:1,}}>
       <Text style={styles.text1}>Height : {displayHeight}</Text>
       <Text style={styles.text1}>Weight : {displayWeight}</Text>
      </View>

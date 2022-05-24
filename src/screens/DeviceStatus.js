@@ -12,6 +12,8 @@ const DeviceStatus = ({navigation}) => {
   const axiosContext = useContext(AxiosContext);
   const authContext = useContext(AuthContext);
   const [deviceInfo, setDeviceInfo] = useState(0)
+  const [battery, setBattery] = useState('Loading..')
+  const [frimware, setFrimware] = useState('Loading..')
 
   useEffect(() => {
     getDeviceStatus();
@@ -22,6 +24,8 @@ const DeviceStatus = ({navigation}) => {
       const response = await axiosContext.authDeviceAxios.get('/get_device')
       let deviceInfo = response.data;
       setDeviceInfo(deviceInfo)
+      setBattery(deviceInfo.battery)
+      setFrimware(deviceInfo.frimware)
       console.log(deviceInfo);
     } catch (error) {
       console.log(error);
@@ -54,7 +58,7 @@ const DeviceStatus = ({navigation}) => {
       <View style={{flexDirection:'row'}}>
         <DeviceInfo
           title={'Battery'}
-          title2={`${deviceInfo.battery}%`}
+          title2={`${battery}%`}
           source={Images.CHARGING}
         />
         <DeviceInfo
@@ -72,7 +76,7 @@ const DeviceStatus = ({navigation}) => {
         />
         <DeviceInfo
           title={'Firmware'}
-          title2={deviceInfo.frimware}
+          title2={frimware}
           source={Images.CLOUDDOWNLOAD}
         />
       </View>
