@@ -126,7 +126,7 @@ const Navigators = ()=>{
           drawerIcon: ({color}) => (
             <Ionicons name="home-outline" size={22} color={color} />
           ),
-        }} name="DeviceFound" component={DeviceFound}/> */}
+        }} name="SyncingDevice" component={SyncingDevice}/> */}
 
         <Drawer.Screen options={{
           title:'Calories Burnt',

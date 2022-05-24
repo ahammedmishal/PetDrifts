@@ -100,9 +100,9 @@ const styles = StyleSheet.create({
    alignItems:'center',
     justifyContent:'center',
     backgroundColor:'#faf6ee',
-    borderRadius: 180,
-    width:windowWidth / 2,
-    height:windowHeight / 3.9,
+    borderRadius:windowWidth / 1.9,
+    width:windowWidth / 1.9,
+    height:windowWidth / 1.9,
   },
   refreshContainer: {
     alignItems:'center'
