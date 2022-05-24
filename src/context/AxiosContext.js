@@ -22,6 +22,10 @@ const AxiosProvider = ({children}) => {
     baseURL: 'http://45.63.18.150:9090/fit/',
   });
 
+  const authDeviceAxios = axios.create({
+    baseURL: 'http://45.63.18.150:9090/device/',
+  });
+
   const publicAxios = axios.create({
     baseURL: 'http://45.63.18.150:9090/accounts/',
   });
@@ -53,6 +57,19 @@ const AxiosProvider = ({children}) => {
   );
 
   authFitAxios.interceptors.request.use(
+    config => {
+      if (!config.headers.Authorization) {
+        config.headers.Authorization = `Bearer ${authContext.getAccessToken()}`;
+      }
+
+      return config;
+    },
+    error => {
+      return Promise.reject(error);
+    },
+  );
+
+  authDeviceAxios.interceptors.request.use(
     config => {
       if (!config.headers.Authorization) {
         config.headers.Authorization = `Bearer ${authContext.getAccessToken()}`;
@@ -114,6 +131,7 @@ const AxiosProvider = ({children}) => {
         publicAxios,
         authPetAxios,
         authFitAxios,
+        authDeviceAxios,
       }}>
       {children}
     </Provider>

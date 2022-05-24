@@ -11,6 +11,7 @@ export default {
     CAT: require('../Assets/Images/cat.png'),
     CHARGING: require('../Assets/Images/charging.png'),
     WIFI: require('../Assets/Images/wifi.png'),
+    WIFINETWORK: require('../Assets/Images/wifinetwork.png'),
     CLOUDDOWNLOAD: require('../Assets/Images/cloud-download.png'),
     REFRESH: require('../Assets/Images/refresh.png'),
     REFRESHICON: require('../Assets/Images/refreshIcon.png'),

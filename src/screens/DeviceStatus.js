@@ -1,11 +1,33 @@
-import React from 'react';
+import React, { useEffect, useState,useContext } from 'react';
 import { View, Text, StyleSheet,StatusBar,TouchableOpacity,Image } from 'react-native';
 import DeviceInfo from '../components/DeviceInfo';
 import { Colors, Fonts,Images } from '../constants';
 import { StatusBarHeight, windowHeight, windowWidth} from '../utils/Dimenstions';
 import {Avatar} from 'react-native-paper';
+import {AuthContext} from '../context/AuthContext';
+import {AxiosContext} from '../context/AxiosContext';
 
 const DeviceStatus = ({navigation}) => {
+
+  const axiosContext = useContext(AxiosContext);
+  const authContext = useContext(AuthContext);
+  const [deviceInfo, setDeviceInfo] = useState(0)
+
+  useEffect(() => {
+    getDeviceStatus();
+  },[])
+  
+  const getDeviceStatus = async () => { 
+    try {
+      const response = await axiosContext.authDeviceAxios.get('/get_device')
+      let deviceInfo = response.data;
+      setDeviceInfo(deviceInfo)
+      console.log(deviceInfo);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <View style={styles.container}>
      <StatusBar
@@ -32,7 +54,7 @@ const DeviceStatus = ({navigation}) => {
       <View style={{flexDirection:'row'}}>
         <DeviceInfo
           title={'Battery'}
-          title2={'67%'}
+          title2={`${deviceInfo.battery}%`}
           source={Images.CHARGING}
         />
         <DeviceInfo
@@ -50,7 +72,7 @@ const DeviceStatus = ({navigation}) => {
         />
         <DeviceInfo
           title={'Firmware'}
-          title2={'JDQ34-2269...'}
+          title2={deviceInfo.frimware}
           source={Images.CLOUDDOWNLOAD}
         />
       </View>

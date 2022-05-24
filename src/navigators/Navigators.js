@@ -120,6 +120,13 @@ const Navigators = ()=>{
             <Ionicons name="home-outline" size={22} color={color} />
           ),
         }} name="DashBoardScreen" component={DashBoardScreen}/>
+        {/* <Drawer.Screen options={{
+          title: 'Dash Board' ,
+          headerShown: false,
+          drawerIcon: ({color}) => (
+            <Ionicons name="home-outline" size={22} color={color} />
+          ),
+        }} name="DeviceFound" component={DeviceFound}/> */}
 
         <Drawer.Screen options={{
           title:'Calories Burnt',

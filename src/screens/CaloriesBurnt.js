@@ -1,22 +1,47 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect,useContext} from 'react';
 import { View, Text,Image, StyleSheet,TouchableOpacity,StatusBar} from 'react-native';
 import { Fonts,Images,Colors } from '../constants';
 import Icon from 'react-native-vector-icons/Ionicons'
 import { StatusBarHeight, windowHeight, windowWidth} from '../utils/Dimenstions';
 import { BarChart, LineChart} from "react-native-gifted-charts";
 import {Avatar} from 'react-native-paper';
+import {AuthContext} from '../context/AuthContext';
+import {AxiosContext} from '../context/AxiosContext';
 
 const CaloriesBurnt = ({navigation}) => {
+
+  useEffect(() => {
+    getChartsData();
+  },[])
   
-    const [lineData, setLineData] = useState([
-      {value: 0,label:'Mon'},
-      {value: 200,label:'Tue'},
-      {value: 180,label:'Wed'},
-      {value: 350,label:'Thu'},
-      {value: 200,label:'Fri'},
-      {value: 80,label:'Sat'},
-      {value: 280,label:'Sun'},
-    ])
+  const getChartsData = async () => { 
+    try {
+      const response = await axiosContext.authFitAxios.get('/get_calories_weekly')
+      let lineData = response.data;
+
+      for(var i = 0; i < lineData.length; i++){
+        var obj = lineData[i];
+        for(var prop in obj){
+            if(obj.hasOwnProperty(prop) && obj[prop] !== null && !isNaN(obj[prop])){
+                obj[prop] = +obj[prop];   
+            }
+        }
+      }
+      setLineData(lineData)
+      console.log(lineData);
+    } catch (error) {
+      console.log(error); 
+    }
+  }
+    const axiosContext = useContext(AxiosContext);
+    const authContext = useContext(AuthContext);
+
+    const [lineData, setLineData] = useState([])
+
+    // const [lineData, setLineData] = useState([
+    //   {value: "0.20",label:'Sat'},
+    //   {value: 0.20,label:'Sat'},
+    // ])
 
     const [barData, setBarData] = useState([
       {value: 250, label: 'Jan'},
@@ -121,8 +146,13 @@ const CaloriesBurnt = ({navigation}) => {
                         alignItems:'center',
                         borderRadius:8,
                       }}>
-                      <Text style={{color: Colors.DEFAULT_WHITE, fontWeight:'bold',fontSize:16}}>{items[0].value}</Text>
-                      <Text style={{color: Colors.DEFAULT_WHITE, fontSize:12,fontFamily:Fonts.POPPINS_REGULAR}}>{"Kcal"}</Text>
+                        {items ?
+                        <>
+                          <Text style={{color: Colors.DEFAULT_WHITE, fontWeight:'bold',fontSize:16}}>{items[0].value}</Text>
+                          <Text style={{color: Colors.DEFAULT_WHITE, fontSize:12,fontFamily:Fonts.POPPINS_REGULAR}}>{"Kcal"}</Text>
+                        </>
+                          : null
+                        }
                     </View>
                   );
                 },
