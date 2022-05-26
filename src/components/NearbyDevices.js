@@ -24,7 +24,7 @@ let NearbyDevices = ({wifiState}) =>{
             setNearbyNetworks(devices_list);
          
             }).catch(err=>{
-            console.log(err)
+            // console.log(err)
         })
     },)
     

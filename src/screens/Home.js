@@ -22,12 +22,12 @@ const Home = ({navigation}) => {
       try {
         const response = await axiosContext.authAxios.get('/get_user_profile')
         let userInfo = response.data
-        console.log(response.data);
+        // console.log(response.data);
         setUserInfo(userInfo)
-        console.log(userInfo);
+        // console.log(userInfo);
       } catch (error) {
         setStatus('error');
-        console.log(error)
+        // console.log(error)
       }
     }
     getUsers();
@@ -36,14 +36,14 @@ const Home = ({navigation}) => {
         try {
           const credentials = await Keychain.getGenericPassword();
           if (credentials) {
-           console.log('Credentials loaded')
-           console.log('Credentials:',credentials)
-           console.log('Credentials:',credentials.password)
+          //  console.log('Credentials loaded')
+          //  console.log('Credentials:',credentials)
+          //  console.log('Credentials:',credentials.password)
           } else {
             console.log('No credentials stored');
           }
         } catch (error) {
-          console.log('Keychain couldn\'t be accessed!', error);
+          // console.log('Keychain couldn\'t be accessed!', error);
           setLoading(false);
         }
       }

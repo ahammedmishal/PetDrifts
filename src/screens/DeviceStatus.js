@@ -26,9 +26,9 @@ const DeviceStatus = ({navigation}) => {
       setDeviceInfo(deviceInfo)
       setBattery(deviceInfo.battery)
       setFrimware(deviceInfo.frimware)
-      console.log(deviceInfo);
+      // console.log(deviceInfo);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   }
 

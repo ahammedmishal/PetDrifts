@@ -60,7 +60,7 @@ const Navigators = ()=>{
         setStatus('success');
       } catch (error) {
         setStatus('error');
-        console.log(`Keychain Error: ${error.message}`);
+        // console.log(`Keychain Error: ${error.message}`);
         authContext.setAuthState({
           access: null,
           refresh: null,
@@ -76,7 +76,7 @@ const Navigators = ()=>{
           const response = await axiosContext.authPetAxios.get('/get_profile')
           setUserInfoStatus('success')
         }catch (error) {
-          console.log("main",error)
+          // console.log("main",error)
            setUserInfoStatus('error') 
         }  
       } 
@@ -230,26 +230,15 @@ const Navigators = ()=>{
         <Stack.Screen  options={{
           headerShown:false
         }}
-          name="PetInformation" component={PetInformation}/>
+        name="PetInformation" component={PetInformation}/>
           
-          <Stack.Screen name="Home" component={Home} options={{headerShown:false}} />
+        <Stack.Screen name="Home" component={Home} options={{headerShown:false}} />
 
-          <Stack.Screen options={{
+        <Stack.Screen options={{
           headerShown: false
         }} name="SyncingDevice" component={SyncingDevice}/>
 
-          <Stack.Screen options={{
-                title:'Calories Burnt',
-                headerRight: () =>{
-                  return <TouchableOpacity
-                  style={{paddingHorizontal: 10}}
-                  onPress={() => {console.log('cliked')}}>
-                  <Avatar.Image
-                    source={Images.PETAVATAR}
-                    size={40}
-                    />
-                    </TouchableOpacity> 
-          }}} name="CaloriesBurnt" component={CaloriesBurnt}/>
+        <Stack.Screen  name="CaloriesBurnt" component={CaloriesBurnt}/>
 
         <Stack.Screen options={{
           headerShown:false
@@ -263,27 +252,15 @@ const Navigators = ()=>{
           headerShown: false
         }} name="DeviceFound" component={DeviceFound}/>
               
-            <Stack.Screen  options={{
-              title:'Settings',
-              headerRight: () =>{
-                return <TouchableOpacity
-                style={{paddingHorizontal: 10}}
-                onPress={() => {console.log('cliked')}}>
-                  <Avatar.Image
-                    source={Images.USERAVATAR}
-                    size={40}
-                  />
-                  </TouchableOpacity>
-              }}}
-              name="Settings" component={Settings}/>
+        <Stack.Screen name="Settings" component={Settings}/>
             
-            <Stack.Screen
-              name="DrawerHome"
-              component={DrawerHome}
-              options={{ headerShown: false }}
-            />
-
-          <Stack.Screen name="WeGuessed" component={WeGuessed} options={{headerShown:false}} />
+        <Stack.Screen
+            name="DrawerHome"
+            component={DrawerHome}
+            options={{ headerShown: false }}
+        />
+        
+        <Stack.Screen name="WeGuessed" component={WeGuessed} options={{headerShown:false}} />
         </>
         }
       </Stack.Navigator>

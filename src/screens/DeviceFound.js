@@ -32,7 +32,7 @@ const DeviceFound = ({navigation}) => {
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
       
       } else {
-        console.log("Location permission denied");
+        // console.log("Location permission denied");
       }
     } catch (err) {
       console.warn(err);

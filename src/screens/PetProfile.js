@@ -13,6 +13,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import {AuthContext} from '../context/AuthContext';
 import {AxiosContext} from '../context/AxiosContext';
 import ToggleSwitch from "toggle-switch-react-native";
+import Toast from 'react-native-simple-toast';
 
 const PetProfile = ({navigation}) => {
     const axiosContext = useContext(AxiosContext);
@@ -34,24 +35,24 @@ const PetProfile = ({navigation}) => {
     useEffect(() => {
         var h = (convertedCentoFeet())
         setHeight(h.replace(/'/g,"."))
-        console.log("height",height)
+        // console.log("height",height)
         if(switchTwo){
           var w = (convertedLbstoKg())
           setWeight(w)
-          console.log('converted weight',weight);
+          // console.log('converted weight',weight);
         }else{
           setWeight(rulerWeight)
-          console.log("weight",rulerWeight);
+          // console.log("weight",rulerWeight);
         }
-        console.log('original weight',weight);
-        console.log(name);
-        console.log(age);
-        console.log(breed); 
-        console.log(type);
-        console.log(rulerHeight);
-        console.log(rulerWeight);
-        console.log(height);
-        console.log(weight);
+        // console.log('original weight',weight);
+        // console.log(name);
+        // console.log(age);
+        // console.log(breed); 
+        // console.log(type);
+        // console.log(rulerHeight);
+        // console.log(rulerWeight);
+        // console.log(height);
+        // console.log(weight);
       },)
 
     useEffect(() => {
@@ -68,14 +69,14 @@ const PetProfile = ({navigation}) => {
         var inches = Math.round((realFeet - feet) * 12);
         var ft = feet+"'"+inches;
         var h = feet+"."+inches;
-        console.log(h);
+        // console.log(h);
         return ft
     }
   
     const convertedLbstoKg = () => {
         var value = (rulerWeight / 2.2);
         var lbs = value.toString().slice(0,4)
-        console.log("second weight",lbs);
+        // console.log("second weight",lbs);
         return lbs
     }
 
@@ -90,26 +91,28 @@ const PetProfile = ({navigation}) => {
             });
             let petInfo = response.data;
             setPetInfo(petInfo);
-            console.log(petInfo);
+            // console.log(petInfo);
+            Toast.show("Saved Succesfully.")
             } catch (error) {
             Alert.alert('Error',  JSON.stringify(error.response));
-            console.log(error)
+            // console.log(error)
+            Toast.show("Network error.")
           }
     }
   
   const onGetProfile = async () =>{
     try {
       const response = await axiosContext.authPetAxios.get('/get_profile')
-      console.log(response.data);
+      // console.log(response.data);
       setName(response.data.name)
       setAge(response.data.age)
       setBreed(response.data.breed)
       setdisplayHeight(response.data.height)
       setdisplayWeight(response.data.weight)
-      console.log("he",height);
+      // console.log("he",height);
     } catch (error) {
       // setStatus('error');
-      console.log(error)
+      // console.log(error)
     }
   }
   

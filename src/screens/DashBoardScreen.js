@@ -5,7 +5,8 @@ import {
   StyleSheet,
   StatusBar,
   Image,
-  TouchableOpacity
+  TouchableOpacity,
+  LogBox
   } from "react-native";
 import {AuthContext} from '../context/AuthContext';
 import {AxiosContext} from '../context/AxiosContext';
@@ -18,15 +19,14 @@ import {Avatar} from 'react-native-paper';
 import { DonutChart } from "react-native-circular-chart";
 import { LineChart } from 'react-native-svg-charts'
 import * as shape from 'd3-shape'
-import { act } from "react-test-renderer";
+LogBox.ignoreAllLogs(true)
 
 const DashBoardScreen = ({navigation}) => { 
 
   const axiosContext = useContext(AxiosContext);
-  const authContext = useContext(AuthContext);
-  const [caloriesRest, setCaloriesRest] = useState({});
-  const [calories, setCalories] = useState()
-  const [sleep, setSleep] = useState()
+
+  const [calories, setCalories] = useState(0)
+  const [sleep, setSleep] = useState(0)
   const [status, setStatus] = useState('loading');
   const [active, setActive] = useState(null)
 
@@ -41,17 +41,16 @@ const DashBoardScreen = ({navigation}) => {
       let caloriesRest = response.data;
       let calories = response.data.calories;
       let sleep = response.data.sleep;
-      console.log(response.data);
-      setCaloriesRest(caloriesRest);
+      // console.log(response.data);
       setCalories(calories);
       setSleep(sleep);
-      console.log(caloriesRest);
-      console.log(calories);
-      console.log(sleep);
+      // console.log(caloriesRest);
+      // console.log(calories);
+      // console.log(sleep);
       setStatus('success');
     } catch (error) {
       setStatus('error');
-      console.log(error);
+      // console.log(error);
     } 
   }
 
@@ -60,7 +59,7 @@ const DashBoardScreen = ({navigation}) => {
       const response = await axiosContext.authFitAxios.get('/get_pet_status')
       setActive(response.data.status)
     } catch (error) {
-      console.log(error)
+      // console.log(error)
     } 
   }
 

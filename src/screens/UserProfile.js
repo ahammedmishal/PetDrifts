@@ -7,6 +7,7 @@ import { Colors, Fonts, Images } from '../constants';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { StatusBarHeight } from '../utils/Dimenstions';
 import { AxiosContext } from '../context/AxiosContext';
+import Toast from 'react-native-simple-toast';
 
 const UserProfile = ({navigation}) => {
 
@@ -22,24 +23,26 @@ const UserProfile = ({navigation}) => {
           country,
           province
         });
-        console.log(response.data);
+        // console.log(response.data);
+        Toast.show("Saved Succesfully.")
         } catch (error) {
         Alert.alert('Error',  JSON.stringify(error.response));
-        console.log(error)
+        // console.log(error)
+        Toast.show("Network error.")
       }
   }
 
   const onGetProfile = async () =>{
     try {
       const response = await axiosContext.authAxios.get('/get_user_profile')
-      console.log(response.data);
+      // console.log(response.data);
       setName(response.data.name)
       // setEmail(response.data.email)
       setCountry(response.data.country)
       setProvince(response.data.province)
     } catch (error) {
       // setStatus('error');
-      console.log(error)
+      // console.log(error)
     }
   }
     

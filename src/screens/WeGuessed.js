@@ -27,20 +27,20 @@ const WeGuessed = ({route,navigation}) => {
     useEffect(() => {
       var h = (convertedCentoFeet())
       setHeight(h.replace(/'/g,"."))
-      console.log("height",height)
+      // console.log("height",height)
       if(switchTwo){
         var w = (convertedLbstoKg())
         setWeight(w)
-        console.log('converted weight',weight);
+        // console.log('converted weight',weight);
       }else{
         setWeight(rulerWeight)
-        console.log("weight",rulerWeight);
+        // console.log("weight",rulerWeight);
       }
-      console.log('original weight',weight);
-      console.log(name);
-      console.log(age);
-      console.log(breed);
-      console.log(type);
+      // console.log('original weight',weight);
+      // console.log(name);
+      // console.log(age);
+      // console.log(breed);
+      // console.log(type);
     },)
     
     const convertedCentoFeet = () => {
@@ -49,14 +49,14 @@ const WeGuessed = ({route,navigation}) => {
       var inches = Math.round((realFeet - feet) * 12);
       var ft = feet+"'"+inches;
       var h = feet+"."+inches;
-      console.log(h);
+      // console.log(h);
       return ft
     }
 
     const convertedLbstoKg = () => {
       var value = (rulerWeight / 2.2);
       var lbs = value.toString().slice(0,4)
-      console.log("second weight",lbs);
+      // console.log("second weight",lbs);
       return lbs
     }
 
@@ -72,10 +72,10 @@ const WeGuessed = ({route,navigation}) => {
             });
             let petInfo = response.data;
             setPetInfo(petInfo);
-            console.log(petInfo);
+            // console.log(petInfo);
           } catch (error) {
             Alert.alert('Error',  JSON.stringify(error.response));
-            console.log(error)
+            // console.log(error)
           }
           navigation.navigate('SearchingForDevices')
     }

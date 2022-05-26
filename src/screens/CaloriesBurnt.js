@@ -28,9 +28,9 @@ const CaloriesBurnt = ({navigation}) => {
         }
       }
       setLineData(lineData)
-      console.log(lineData);
+      // console.log(lineData);
     } catch (error) {
-      console.log(error); 
+      // console.log(error); 
     }
   }
     const axiosContext = useContext(AxiosContext);
