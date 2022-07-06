@@ -81,15 +81,19 @@ const restGraph = [200, 10, 40, 95, -4, -24, 205, 91, 35, 53, -53, 24, 250, 300,
      />
 
       <View style={styles.headerContainer}>
-        <TouchableOpacity onPress={() => navigation.openDrawer()}>
+        <TouchableOpacity 
+          style={{backgroundColor:'#f9f9f9',width:40,height:40,alignItems:'center',justifyContent:'center',borderRadius:8}}
+          onPress={() => navigation.openDrawer()}>
             <Image source={Images.MENU} style={{width:25,height:20}}/>
         </TouchableOpacity>
+            <Image source={Images.Logo} style={{width:128,height:40}}/>
         <TouchableOpacity
          onPress={()=> navigation.navigate('DrawerHome',{screen: 'PetProfile'})}>
           <Avatar.Image
             source={Images.PETAVATAR}
             size={40}
           />
+          {/* enable below code to get green active color on pet profile */}
           {/* <View style={{borderRadius:30,width:12,height:12,backgroundColor:'#00F349',alignSelf:'flex-end', position: 'absolute',
             right: -2,
             bottom: 0,borderWidth:2,borderColor:'#ffffff'}}
@@ -99,8 +103,8 @@ const restGraph = [200, 10, 40, 95, -4, -24, 205, 91, 35, 53, -53, 24, 250, 300,
 
       <View style={{}}>
           <View style={styles.titileContainer}>
-              <Text style={styles.headerText1}>{active}</Text>
-              <Text style={styles.headerText}>Feeling like Athlete!</Text>
+              {/* <Text style={styles.headerText1}>{active}</Text> */}
+              {/* <Text style={styles.headerText}>Feeling like Athlete!</Text> */}
           </View>
 
           <View style={styles.sectionWrapper}>
@@ -112,16 +116,18 @@ const restGraph = [200, 10, 40, 95, -4, -24, 205, 91, 35, 53, -53, 24, 250, 300,
               <>
                 <DonutChart
                     data={pieData}
-                    strokeWidth={15}
+                    strokeWidth={15} 
                     radius={100}
                     containerWidth={ 370 - 10 * 2}
                     containerHeight={130 * 2}
                     type="round"
+          
                     startAngle={0}
                     endAngle={360}
                     animationType="slide"
                     labelValueStyle={{
                         color: Colors.LIGHT_GREY2,
+                        
                     }}
                     labelTitleStyle={{
                         color: Colors.LIGHT_GREY2,
@@ -131,7 +137,8 @@ const restGraph = [200, 10, 40, 95, -4, -24, 205, 91, 35, 53, -53, 24, 250, 300,
                         borderRadius: 10,
                     }}
                 />
-                <Image source={Images.BURN} style={{width:40,height:40,position:'absolute',resizeMode:'contain'}}/>
+                <Text style={{position:'absolute',bottom:100}}>Feeling like Athlete!</Text>
+                <Image source={Images.BURN} style={{bottom:150,width:40,height:40,position:'absolute',resizeMode:'contain'}}/>
               </>
             }
 

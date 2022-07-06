@@ -48,8 +48,7 @@ const UserProfile = ({navigation}) => {
     
     const axiosContext = useContext(AxiosContext);
     const [name, setName] = useState(null);
-    const [email, setEmail] = useState(null);
-    const [password, setPassword] = useState(null);
+
     const [country, setCountry] = useState(null);
     const [province, setProvince] = useState(null);
   return (
@@ -81,24 +80,6 @@ const UserProfile = ({navigation}) => {
         autoCorrect={false}
         placeholderText="Name"
      />
-      <Text style={styles.text1}>Email:</Text>
-      <FormField
-        labelValue={email}
-        onChangeText={(email) => setEmail(email)}
-        keyboardType="email-address"
-        autoCapitalize="none"
-        autoCorrect={false}
-        placeholderText="abc@gmail.com"
-     />
-      <Text style={styles.text1}>Password:</Text>
-      <FormField
-        labelValue={password}
-        onChangeText={(password) => setPassword(password)}
-        secureTextEntry={true}
-        autoCapitalize="none"
-        autoCorrect={false}
-        placeholderText="Password"
-     />
       <Text style={styles.text1}>Country:</Text>
       <FormField
         labelValue={country}
@@ -126,7 +107,7 @@ const UserProfile = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent:'center',
+    justifyContent:'space-between',
     backgroundColor: Colors.DEFAULT_WHITE,
     padding: 20,
   },
