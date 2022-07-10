@@ -19,6 +19,11 @@ import {Avatar} from 'react-native-paper';
 import { DonutChart } from "react-native-circular-chart";
 import { LineChart } from 'react-native-svg-charts'
 import * as shape from 'd3-shape'
+import CircularProgress from 'react-native-circular-progress-indicator';
+import {PieChart} from 'react-native-svg-charts';
+import Svg, {Text as SvgText, ForeignObject} from 'react-native-svg';
+import LinearGradient from 'react-native-linear-gradient';
+
 LogBox.ignoreAllLogs(true)
 
 const DashBoardScreen = ({navigation}) => { 
@@ -29,6 +34,24 @@ const DashBoardScreen = ({navigation}) => {
   const [sleep, setSleep] = useState(0)
   const [status, setStatus] = useState('loading');
   const [active, setActive] = useState(null)
+  
+  const data = Array.apply(null, Array(61)).map(Number.prototype.valueOf, 1);
+  const [values, setValues] = useState([25,15])
+  // Replace with your fill method...
+  const getFill = (index) => {
+    if (index < values[0]) return '#FFB300';
+    if (index-values[0] < values[1]) return '#026D7E';
+    return '#CCCCCC';
+  };
+
+  const pieDatas = data.map((value, index) => ({
+    value,
+    svg: {
+      fill: getFill(index),
+    },
+    arc: { cornerRadius: 0,strokeWidth:2},
+    key: `pie-${index}`,
+  }));
 
   useEffect(() => {
     getCaloriesRest();
@@ -114,82 +137,112 @@ const restGraph = [200, 10, 40, 95, -4, -24, 205, 91, 35, 53, -53, 24, 250, 300,
               <Spinner/>
               :
               <>
-                <DonutChart
-                    data={pieData}
-                    strokeWidth={15} 
-                    radius={100}
-                    containerWidth={ 370 - 10 * 2}
-                    containerHeight={130 * 2}
-                    type="round"
-          
-                    startAngle={0}
-                    endAngle={360}
-                    animationType="slide"
-                    labelValueStyle={{
-                        color: Colors.LIGHT_GREY2,
-                        
+                <PieChart 
+                    innerRadius="89%"
+                    outerRadius="99%"
+                    style={{
+                      height: 250,
                     }}
-                    labelTitleStyle={{
-                        color: Colors.LIGHT_GREY2,
-                    }}
-                    containerStyle={{
-                        backgroundColor: Colors.LIGHT_GREY2,
-                        borderRadius: 10,
-                    }}
-                />
-                <Text style={{position:'absolute',bottom:100}}>Feeling like Athlete!</Text>
-                <Image source={Images.BURN} style={{bottom:150,width:40,height:40,position:'absolute',resizeMode:'contain'}}/>
+                    data={pieDatas}>
+                      <ForeignObject x={-100} y={-100}>
+                        <View style={styles.progressCircleContentContainer}>
+                            <View style={{width:100,height:100,backgroundColor:'#fcfcfc',alignItems: 'center',borderRadius:60,justifyContent:'center'}}>
+                            <View style={{width:70,height:70,backgroundColor:'#FFFFFF',alignItems: 'center',borderRadius:60,justifyContent:'center'}}>
+                                <Image source={Images.PET} style={{width:50,height:50,resizeMode:'contain'}}/>
+                            </View>
+                        </View>
+                        <View style={styles.progressCircleContentView}>
+                            <Text style={styles.text}>Feeling like</Text>
+                            <Text style={styles.text1}>Athlete!</Text>
+                        </View>
+                        </View>
+                      </ForeignObject>
+                  </PieChart>
               </>
             }
 
             <View style={styles.sectionConatiner}>
               <View style={styles.sectionTitleConatiner}>
-              <Icon name="moon-full" size={15} color={Colors.PRIMARY}/>
-              <Text style={styles.sectionTitle}>Calories</Text>
-            </View>
+                <View style={{width:19,height:6,backgroundColor:'#FFB300',borderRadius:10,marginRight:10}}/>
+                <Text style={styles.sectionTitle}>Calories</Text>
+              </View>
 
-            <View style={styles.sectionTitleConatiner}>
-              <Icon name="moon-full" size={15} color={Colors.GREEN_CYAN2}/>
-              <Text style={styles.sectionTitle}>Rest Hours</Text>
-            </View>
+              <View style={styles.sectionTitleConatiner}>
+                <View style={{width:19,height:6,backgroundColor:'#026D7E',borderRadius:10,marginRight:10}}/>
+                <Text style={styles.sectionTitle}>Rest Hours</Text>
+              </View>
           </View>
         </View>
 
         {/* Line Graph */}
-        <View style={{flexDirection:'row',justifyContent:'space-between',marginTop:10}}>
+        <View style={{justifyContent:'space-evenly',marginTop:40,backgroundColor:'#F9F9F9',borderRadius:20,}}>
+        <View style={{flexDirection:'row',justifyContent:'space-evenly',backgroundColor:'#F9F9F9',borderRadius:20,paddingHorizontal:5,marginBottom:10}}>
           
           <TouchableOpacity activeOpacity={0.5} onPress={()=>navigation.navigate('CaloriesBurnt')} style={styles.ChartConatinerLeft}>
-            <Text style={styles.lineGraphText}>{calories} Kcal</Text>
-            <LineChart
-              style={{height: 95,width:100}}
-              data={caloriesGraph}
-              contentInset={{ top: 50, bottom: 30 }}
-              curve={shape.curveNatural}
-              svg={{  strokeWidth: 3, stroke: Colors.DEFAULT_WHITE }}
-            />
-            <Text style={styles.lineGraphText2}>Calories</Text>
+            <LinearGradient 
+              start={{x:0.0,y:0.25}}
+              end={{x:0.5,y:1.0}}
+              colors={['#FFAD00','#985100']}
+              style={styles.ChartConatinerLeft}
+              >
+            <View style={{width:56,height:56,backgroundColor:'white',borderRadius:30,marginTop:-30,alignItems:'center',justifyContent:'center',elevation:30}}>
+              <Image source={Images.CALORIES} style={{width:35,height:40,resizeMode:'contain'}}/>
+            </View>
+              <LineChart
+                style={{height: 95,width:100}}
+                data={caloriesGraph}
+                contentInset={{ top: 50, bottom: 30 }}
+                curve={shape.curveNatural}
+                svg={{  strokeWidth: 3, stroke: Colors.DEFAULT_WHITE }}
+              />
+              <View style={{flexDirection:'row'}}>
+                <Text style={styles.lineGraphText}>{calories} </Text>
+                <Text style={styles.lineGraphValueText}>Kcal</Text>
+              </View>
+              <Text style={styles.lineGraphText2}>Calories burnt</Text>
+            </LinearGradient>
           </TouchableOpacity>
 
           <TouchableOpacity activeOpacity={0.5} onPress={()=>navigation.navigate('CaloriesBurnt')} style={styles.ChartConatinerRight}>
-            <Text style={styles.lineGraphText}>{sleep} Hours</Text>
-            <LineChart
-              style={{height: 95,width:100}}
-              data={restGraph}
-              contentInset={{ top: 50, bottom: 30 }}
-              curve={shape.curveNatural}
-              svg={{  strokeWidth: 3, stroke: Colors.DEFAULT_WHITE }}
-            />
-            <Text style={styles.lineGraphText2}>Rest</Text>
+            <LinearGradient 
+                start={{x:0.0,y:0.25}}
+                end={{x:0.5,y:1.0}}
+                colors={['#12A1B3','#025D6C']}
+                style={styles.ChartConatinerLeft}
+                >
+            <View style={{width:56,height:56,backgroundColor:'white',borderRadius:30,marginTop:-30,alignItems:'center',justifyContent:'center',elevation:30}}>
+              <Image source={Images.REST} style={{width:35,height:40,resizeMode:'contain'}}/>
+            </View>
+              <LineChart
+                style={{height: 95,width:100}}
+                data={restGraph}
+                contentInset={{ top: 50, bottom: 30 }}
+                curve={shape.curveNatural}
+                fill={ 'white' }
+                svg={{  strokeWidth: 3, stroke: Colors.DEFAULT_WHITE }}
+              />
+              <View style={{flexDirection:'row'}}>
+                <Text style={styles.lineGraphText}>{sleep} </Text>
+                <Text style={styles.lineGraphValueText}>Hours</Text>
+              </View>
+              <Text style={styles.lineGraphText2}>Rest</Text>
+            </LinearGradient>
           </TouchableOpacity>
 
         </View>
 
-     </View>
+        <FormButton
+            buttonTitle="Device"
+            backgroundColor={"white"}
+            width={'86%'}
+            alignSelelf={'center'}
+            elevation={54}
+            color={'#FF7B00'}
+            onPress={()=> navigation.navigate('DrawerHome',{screen: 'DeviceStatus'})}
+        />
+        </View>
 
-     <FormButton
-        buttonTitle="Device"
-        onPress={()=> navigation.navigate('DrawerHome',{screen: 'DeviceStatus'})}
-     />
+     </View>
 
     </View>
   );
@@ -218,7 +271,7 @@ const styles = StyleSheet.create({
       color: Colors.BLACK,
     },
     ChartConatinerLeft: {
-      width:windowWidth /2.3,
+      width:windowWidth /2.8,
       height:windowHeight/ 4.3,
       backgroundColor: Colors.PRIMARY,
       borderRadius:15,
@@ -226,7 +279,7 @@ const styles = StyleSheet.create({
       justifyContent:'center'
     },
     ChartConatinerRight: {
-      width:windowWidth /2.3,
+      width:windowWidth /2.8,
       height:windowHeight/ 4.3,
       backgroundColor: Colors.GREEN_CYAN,
       borderRadius:15,
@@ -235,46 +288,80 @@ const styles = StyleSheet.create({
     },
     sectionWrapper: {
       justifyContent: "center",
-      alignItems: "center",
-      borderRadius: 10,
+      borderRadius: 20,
       backgroundColor: Colors.LIGHT_GREY2,
-      shadowColor: "#000",
-      height: windowHeight / 2.5,
-      marginBottom:10
+      height: windowHeight / 2.1,
+      top:5
     },
     sectionConatiner: {
-      backgroundColor: Colors.LIGHT_GREY2,
-      width:240,
-      flexDirection:'row',
+      backgroundColor:' Colors.LIGHT_GREY2',
+      width:'100%',
+      alignItems:'center',
+      flexDirection:'column',
       height:20,
       justifyContent:'space-between',
+      top:15,
     },
     sectionTitleConatiner: {
       flexDirection:'row',
-      justifyContent:'space-between',
       alignItems:'center',
+      width:100
     },
     sectionTitle: {
-      fontFamily: Fonts.POPPINS_REGULAR,
-      fontSize:14,
+      fontFamily: Fonts.POPPINS_MEDIUM,
+      fontSize:13,
       paddingLeft:4,
-      color: Colors.DARK_GREY
+      color: "#262626"
     },
     lineGraphText :{
       color: Colors.DEFAULT_WHITE,
-      fontFamily:Fonts.POPPINS_MEDIUM,
-      fontSize:16,
+      fontFamily:Fonts.POPPINS_SEMI_BOLD,
+      fontSize:20,
+    },
+    lineGraphValueText :{
+      color: '#CDCDCD',
+      fontFamily:Fonts.POPPINS_REGULAR,
+      fontSize:20,
     },
     lineGraphText2 :{
-      color: Colors.DEFAULT_WHITE,
+      color: '#CDCDCD',
       fontFamily:Fonts.POPPINS_SEMI_BOLD,
-      fontSize:17,
+      fontSize:12,
     },
     headerContainer: {
       flexDirection:'row',
       alignItems:'center',
       justifyContent:'space-between',
       paddingTop:StatusBarHeight
+    },
+    pieChart: {
+      height: 300,
+    },
+    progressCircle: {
+      height: 250,
+      marginTop: 25,
+    },
+    progressCircleContentContainer: {
+      alignItems: 'center',
+      width: 200,
+      height: 200,
+      transform: [],
+      justifyContent: 'space-around',
+    },
+    progressCircleContentView: {
+      justifyContent: 'center',
+      alignItems:'center',
+      width: 200,
+    },
+    text: {
+      fontSize: 14,
+      color:'#D99800',
+      fontFamily:Fonts.POPPINS_SEMI_BOLD,
+    },
+    text1: {
+      fontSize: 18,
+      color:'#D99800',
+      fontFamily:Fonts.POPPINS_SEMI_BOLD,
     },
   });
 export default DashBoardScreen;

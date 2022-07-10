@@ -4,9 +4,15 @@ import { Fonts,Colors } from '../constants';
 import {windowHeight, windowWidth} from '../utils/Dimenstions';
 
 
-const FormButton = ({buttonTitle,disabled,backgroundColor,color,isLoading, ...rest}) => {
+const FormButton = ({buttonTitle,disabled,backgroundColor,color,isLoading,width,alignSelelf,elevation, ...rest}) => {
   return (
-    <TouchableOpacity disabled={isLoading} style={[styles.buttonContainer,{backgroundColor: backgroundColor ? backgroundColor : isLoading ? '#F3F3F3' : Colors.PRIMARY}]} {...rest}>
+    <TouchableOpacity disabled={isLoading} 
+    style={[styles.buttonContainer,
+          {backgroundColor: backgroundColor ? backgroundColor : isLoading ? '#F3F3F3' : Colors.PRIMARY,
+          width: width ? width : '100%',
+          alignSelf: alignSelelf ? alignSelelf : '',
+          elevation: elevation ? elevation : ''
+          }]} {...rest}>
       {
         isLoading ?
          <ActivityIndicator size="small" color={Colors.DARK_GREY} />

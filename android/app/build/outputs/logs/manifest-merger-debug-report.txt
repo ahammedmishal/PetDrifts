@@ -12,6 +12,7 @@ MERGED from [:react-native-ble-manager] P:\petDrift-mobile-app\node_modules\reac
 MERGED from [:react-native-ble-plx] P:\petDrift-mobile-app\node_modules\react-native-ble-plx\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-12:12
 MERGED from [:react-native-gesture-handler] P:\petDrift-mobile-app\node_modules\react-native-gesture-handler\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-9:12
 MERGED from [:react-native-keychain] P:\petDrift-mobile-app\node_modules\react-native-keychain\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-12:12
+MERGED from [:react-native-linear-gradient] P:\petDrift-mobile-app\node_modules\react-native-linear-gradient\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-9:12
 MERGED from [:react-native-permissions] P:\petDrift-mobile-app\node_modules\react-native-permissions\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-9:12
 MERGED from [:react-native-safe-area-context] P:\petDrift-mobile-app\node_modules\react-native-safe-area-context\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-9:12
 MERGED from [:react-native-screens] P:\petDrift-mobile-app\node_modules\react-native-screens\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-9:12
@@ -313,6 +314,8 @@ MERGED from [:react-native-gesture-handler] P:\petDrift-mobile-app\node_modules\
 MERGED from [:react-native-gesture-handler] P:\petDrift-mobile-app\node_modules\react-native-gesture-handler\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
 MERGED from [:react-native-keychain] P:\petDrift-mobile-app\node_modules\react-native-keychain\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
 MERGED from [:react-native-keychain] P:\petDrift-mobile-app\node_modules\react-native-keychain\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
+MERGED from [:react-native-linear-gradient] P:\petDrift-mobile-app\node_modules\react-native-linear-gradient\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
+MERGED from [:react-native-linear-gradient] P:\petDrift-mobile-app\node_modules\react-native-linear-gradient\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
 MERGED from [:react-native-permissions] P:\petDrift-mobile-app\node_modules\react-native-permissions\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
 MERGED from [:react-native-permissions] P:\petDrift-mobile-app\node_modules\react-native-permissions\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
 MERGED from [:react-native-safe-area-context] P:\petDrift-mobile-app\node_modules\react-native-safe-area-context\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41

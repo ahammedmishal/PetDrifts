@@ -19,6 +19,8 @@ import com.polidea.reactnativeble.BlePackage;
 import com.swmansion.gesturehandler.RNGestureHandlerPackage;
 // react-native-keychain
 import com.oblador.keychain.KeychainPackage;
+// react-native-linear-gradient
+import com.BV.LinearGradient.LinearGradientPackage;
 // react-native-permissions
 import com.zoontek.rnpermissions.RNPermissionsPackage;
 // react-native-reanimated
@@ -84,6 +86,7 @@ public class PackageList {
       new BlePackage(),
       new RNGestureHandlerPackage(),
       new KeychainPackage(),
+      new LinearGradientPackage(),
       new RNPermissionsPackage(),
       new ReanimatedPackage(),
       new SafeAreaContextPackage(),

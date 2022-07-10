@@ -16,6 +16,9 @@ export default {
     REFRESH: require('../Assets/Images/refresh.png'),
     REFRESHICON: require('../Assets/Images/refreshIcon.png'),
     PETAVATAR: require('../Assets/Images/petavatar.png'),
+    PET: require('../Assets/Images/pet.png'),
     USERAVATAR: require('../Assets/Images/useravatar.png'),
     MENU: require('../Assets/Images/menu.png'),
+    CALORIES: require('../Assets/Images/calories.png'),
+    REST: require('../Assets/Images/rest.png'),
 };
